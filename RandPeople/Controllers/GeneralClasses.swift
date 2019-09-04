@@ -31,7 +31,7 @@ class GeneralClasses {
             print(alici)
             print("alici belirlendi")
             self.sentURL(with: with, closure: { (urlOfImage) in
-                let values = ["imageURL":urlOfImage]
+                let values = ["imageURL":urlOfImage,"sentDate":Date()] as [String : Any]
                 let db = Firestore.firestore()
             db.collection("RandPeople").document("Peoples").collection(alici).document(currentuserId).setData(values, completion: { (error) in
                     if error == nil{

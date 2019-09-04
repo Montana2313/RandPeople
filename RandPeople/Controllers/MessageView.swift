@@ -15,11 +15,20 @@ class MessageView: Navbar {
     private var labelforNavBar = UILabel()
     private var tableView = UITableView()
     private var senderArray = [RandPeople]()
+    private var selectedIndex = 0
     override func viewDidLoad() {
         super.viewDidLoad()
+       NotificationCenter.default.addObserver(self, selector: #selector(MessageView.postDelete), name: NSNotification.Name(rawValue: "postDelete"), object: nil)
+        print("current date : \(Date())")
         getRandPeople()
         setupViews()
         setupFrameWithPhone(withdeviceName: .Hata)
+    }
+    @objc func postDelete(){
+        if self.senderArray.count > 0 {
+            self.senderArray.remove(at: self.selectedIndex)
+            self.tableView.reloadData()
+        }
     }
     private func getRandPeople(){
         let db = Firestore.firestore()
@@ -33,13 +42,31 @@ class MessageView: Navbar {
                     let randpeople = RandPeople()
                     randpeople.senderID = document.documentID
                     randpeople.imageURL = data["imageURL"] as! String
-                    self.senderArray.append(randpeople)
-                    self.tableView.reloadData()
+                    let deger = self.compareDate(withDate: data["sentDate"] as! Timestamp)
+                    if deger == false {
+                        self.senderArray.append(randpeople)
+                        self.tableView.reloadData()
+                    }
                 }
             }else {print(error!.localizedDescription)}
         }
     }
+    private func compareDate(withDate:Timestamp)->Bool{
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let currentDateF = dateFormatter.string(from: currentDate)
+        let comingDateF = dateFormatter.string(from: withDate.dateValue())
+        print("CurrentDate: \(currentDateF)" )
+        print("ComingDate: \(comingDateF)")
+        if currentDateF ==  comingDateF{
+            return false
+        }else {
+            return true
+        }
+    }
 }
+
 extension MessageView : UITableViewDataSource , UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.senderArray.count
@@ -51,6 +78,7 @@ extension MessageView : UITableViewDataSource , UITableViewDelegate{
         view.backgroundColor = .white
         cell.selectedBackgroundView = view
         cell.userId.text = self.senderArray[indexPath.row].senderID
+        cell.uıimageView.sd_setImage(with: URL(string: self.senderArray[indexPath.row].imageURL), completed: nil)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -58,7 +86,8 @@ extension MessageView : UITableViewDataSource , UITableViewDelegate{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+        self.selectedIndex = indexPath.row
+        PeopleShowView.instance.setterOfrandPeople(withID: self.senderArray[indexPath.row].senderID)
         PeopleShowView.instance.showAlert()
         PeopleShowView.instance.setImage(with: self.senderArray[indexPath.row].imageURL)
     }

@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SDWebImage
+import Firebase
 //import Firebase
 //import SVProgressHUD
 
@@ -21,6 +22,7 @@ class PeopleShowView: UIView{
     private var confirmButton = UIButton()
     private var changeButton = UIButton()
     private var parentView = UIView()
+    private var randId : String = ""
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpView()
@@ -83,12 +85,26 @@ class PeopleShowView: UIView{
     {
         UIApplication.shared.keyWindow?.addSubview(self.parentView)
     }
+    func setterOfrandPeople(withID:String){
+        self.randId = withID
+    }
     func setImage(with:String){
         self.imageView.sd_setImage(with: URL(string: with), completed: nil)
     }
     @objc func closeTapped() {
-        parentView.removeFromSuperview()
+        deleteIfCloseButtonTapped {
+            NotificationCenter.default.post(name:NSNotification.Name(rawValue: "postDelete"), object: nil)
+            self.parentView.removeFromSuperview()
+        }
+    }
+    private func deleteIfCloseButtonTapped(closure:@escaping ()->Void){
         // burada silme işlemi gerçekleşecek
+        let db = Firestore.firestore()
+        db.collection("RandPeople").document("Peoples").collection(getUserUUID()).document(self.randId).delete { (error) in
+            if error == nil{
+                closure()
+            }
+        }
     }
     @objc func directToMessage(){
         guard let appdel = UIApplication.shared.delegate as? AppDelegate else {

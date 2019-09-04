@@ -43,7 +43,9 @@ class MessagesCell: UITableViewCell {
         uıimageView.frame = CGRect(x: 10, y: 10, width: 45, height:40)
         userId.frame = CGRect(x: 70, y:10, width: screenWith - 140, height: 45)
         
-        
+        uıimageView.layer.cornerRadius = uıimageView.frame.size.width / 2;
+        uıimageView.clipsToBounds = true
+        uıimageView.layer.masksToBounds = true
         anaView.addSubview(uıimageView)
         anaView.addSubview(userId)
     
