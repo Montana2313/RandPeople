@@ -79,19 +79,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return PhoneType.Hata
         }
     }
-    func open_Page(withPage pagetype:PageType){
+    func open_Page(withPage pagetype:PageType,withParam:String?){
         // yönlendirme işlemleri bura üzerinden yapılacak
         if pagetype == PageType.FirstScreen{
             let rootView:FirstScreen = FirstScreen()
             self.seguePage(withController: rootView)
         }else if pagetype == PageType.MessageView{
             let rootView:MessageView = MessageView()
+            
             self.seguePage(withController: rootView)
         }else if pagetype == PageType.ChatView{
             let rootView:ChatView = ChatView()
             self.seguePage(withController: rootView)
         }else if pagetype == PageType.PersonalChatView {
             let rootView:PersonalChatView = PersonalChatView()
+            rootView.setUserID(withID:withParam!)
             self.seguePage(withController: rootView)
         }
 //        else if pagetype == PageType.ComingEvent{

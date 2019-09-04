@@ -16,6 +16,7 @@ class MessageView: Navbar {
     private var tableView = UITableView()
     private var senderArray = [RandPeople]()
     private var selectedIndex = 0
+    private var refreshcontroller = UIRefreshControl()
     override func viewDidLoad() {
         super.viewDidLoad()
        NotificationCenter.default.addObserver(self, selector: #selector(MessageView.postDelete), name: NSNotification.Name(rawValue: "postDelete"), object: nil)
@@ -91,9 +92,28 @@ extension MessageView : UITableViewDataSource , UITableViewDelegate{
         PeopleShowView.instance.showAlert()
         PeopleShowView.instance.setImage(with: self.senderArray[indexPath.row].imageURL)
     }
+    @objc func refreshControlerFunc(){
+        print("Refresh Çalıştı")
+        if self.senderArray.count > 0 {
+            self.senderArray.removeAll(keepingCapacity: false)
+            self.tableView.reloadData()
+            self.getRandPeople()
+            self.refreshcontroller.endRefreshing()
+        }else {
+            getRandPeople()
+            self.refreshcontroller.endRefreshing()
+        }
+    }
 }
 extension MessageView : SetUpViews{
     func setupViews() {
+        refreshcontroller = {
+           let refreshControl = UIRefreshControl()
+            refreshControl.addTarget(self, action: #selector(MessageView.refreshControlerFunc), for: UIControl.Event.valueChanged)
+            refreshControl.tintColor = UIColor.black
+            refreshControl.attributedTitle = NSAttributedString(string: "Yenilemek için aşağı çek")
+           return refreshControl
+        }()
         labelforNavBar = {
             let navbarLAbel = UILabel()
             navbarLAbel.text = "Gelen Randların.."
@@ -105,6 +125,7 @@ extension MessageView : SetUpViews{
             tableView.dataSource = self
             tableView.separatorStyle = .none
             tableView.register(MessagesCell.self, forCellReuseIdentifier: "cell")
+            tableView.refreshControl = self.refreshcontroller
             return tableView
         }()
         leftButton = {

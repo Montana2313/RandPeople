@@ -105,6 +105,7 @@
 		040F8891231B21A2000D4921 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				043CE7D1231DC8CB00CF84DD /* GeneralClasses.swift */,
 				040F8895231B21DC000D4921 /* General.swift */,
 				040F889B231B336A000D4921 /* CreateAlert.swift */,
 			);
@@ -119,7 +120,6 @@
 				040F889D231B380B000D4921 /* MessageView.swift */,
 				040F889F231B3833000D4921 /* ChatView.swift */,
 				0441BFDA231C885B001D26D1 /* PersonalChatView.swift */,
-				043CE7D1231DC8CB00CF84DD /* GeneralClasses.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

@@ -110,7 +110,15 @@ class PeopleShowView: UIView{
         guard let appdel = UIApplication.shared.delegate as? AppDelegate else {
             fatalError("error")
         }
-        appdel.open_Page(withPage: .PersonalChatView)
+        let setValue = ["dateOfAccept":Date(),"acceptedBy":getUserUUID(),"accepTo":self.randId] as [String : Any]
+        deleteIfCloseButtonTapped {
+            NotificationCenter.default.post(name:NSNotification.Name(rawValue: "postDelete"), object: nil)
+            let db = Firestore.firestore()
+            db.collection("MesajInfos").document("Infos").collection(getUserUUID()).document(self.randId).setData(setValue)
+            db.collection("MesajInfos").document("Infos").collection(self.randId).document(getUserUUID()).setData(setValue)
+            
+            appdel.open_Page(withPage: .PersonalChatView,withParam:self.randId)
+        }
     }
     
 }

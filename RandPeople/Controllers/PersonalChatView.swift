@@ -30,6 +30,7 @@ class PersonalChatView: Navbar {
 //        self.view.addSubview(bottomView)
     }
     func setUserID(withID:String){
+        print("konuşunlan insan : \((withID))")
         selectedUSERID = withID
     }
 
@@ -88,7 +89,7 @@ extension PersonalChatView : SetUpViews{
     @objc func backButton(){
         if self.navigationController?.viewControllers == nil{
             guard let appDel = UIApplication.shared.delegate as? AppDelegate else {fatalError("error")}
-            appDel.open_Page(withPage: .MessageView)
+            appDel.open_Page(withPage: .MessageView, withParam:"")
         }else {
             self.navigationController?.popViewController(animated: true)
         }

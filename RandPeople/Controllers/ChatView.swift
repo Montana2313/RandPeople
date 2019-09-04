@@ -7,14 +7,33 @@
 //
 
 import UIKit
+import Firebase
 
 class ChatView: Navbar {
     private var leftBackButton = UIButton()
     private var chatTableView = UITableView()
+    private var personTalkArray = [String]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        getPerson()
         setupViews()
         setupFrameWithPhone(withdeviceName: .Hata)
+    }
+    private func getPerson(){
+        let db = Firestore.firestore()
+        db.collection("MesajInfos").document("Infos").collection(getUserUUID()).getDocuments { (document, error) in
+            if error == nil {
+                for document in document!.documents {
+                    print(document.documentID)
+                    print(document.data())
+                    print("veriler var")
+//                    let data = document.data()
+                    self.personTalkArray.append(document.documentID)
+                    self.chatTableView.reloadData()
+                }
+            }else {print(error!.localizedDescription)}
+        }
+    
     }
 }
 extension ChatView:SetUpViews{
@@ -49,13 +68,12 @@ extension ChatView:SetUpViews{
 }
 extension ChatView : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.personTalkArray.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? FirstCell else {fatalError("error")}
         // eğer userID var ise rengi daha farklı olacak
-        cell.CommenterName.text = "123ASD-FDSF231**********"
+        cell.CommenterName.text = self.personTalkArray[indexPath.row]
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
