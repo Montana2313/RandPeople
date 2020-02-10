@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SVProgressHUD
 
 class MessageView: Navbar {
     private var leftButton = UIButton()
@@ -24,6 +25,9 @@ class MessageView: Navbar {
         getRandPeople()
         setupViews()
         setupFrameWithPhone(withdeviceName: .Hata)
+        if getuserLoginFirst() == false {
+                FirstUserAlertView.instance.showAlert()
+        }
     }
     @objc func postDelete(){
         if self.senderArray.count > 0 {
@@ -52,20 +56,7 @@ class MessageView: Navbar {
             }else {print(error!.localizedDescription)}
         }
     }
-    private func compareDate(withDate:Timestamp)->Bool{
-        let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        let currentDateF = dateFormatter.string(from: currentDate)
-        let comingDateF = dateFormatter.string(from: withDate.dateValue())
-        print("CurrentDate: \(currentDateF)" )
-        print("ComingDate: \(comingDateF)")
-        if currentDateF ==  comingDateF{
-            return false
-        }else {
-            return true
-        }
-    }
+
 }
 
 extension MessageView : UITableViewDataSource , UITableViewDelegate{
@@ -76,9 +67,11 @@ extension MessageView : UITableViewDataSource , UITableViewDelegate{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? MessagesCell else {fatalError("error")}
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         cell.selectedBackgroundView = view
-        cell.userId.text = self.senderArray[indexPath.row].senderID
+        cell.backgroundColor = .clear
+        let stringArr = self.senderArray[indexPath.row].senderID.components(separatedBy: "-")
+        cell.userId.text = "User#\(String(describing: stringArr.last!))"
         cell.uıimageView.sd_setImage(with: URL(string: self.senderArray[indexPath.row].imageURL), completed: nil)
         return cell
     }
@@ -111,12 +104,13 @@ extension MessageView : SetUpViews{
            let refreshControl = UIRefreshControl()
             refreshControl.addTarget(self, action: #selector(MessageView.refreshControlerFunc), for: UIControl.Event.valueChanged)
             refreshControl.tintColor = UIColor.black
-            refreshControl.attributedTitle = NSAttributedString(string: "Yenilemek için aşağı çek")
+            refreshControl.attributedTitle = NSAttributedString(string: "Refresh", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
            return refreshControl
         }()
         labelforNavBar = {
             let navbarLAbel = UILabel()
-            navbarLAbel.text = "Gelen Randların.."
+            navbarLAbel.text = "My Rands"
+            navbarLAbel.textAlignment = .center
             return navbarLAbel
         }()
         tableView = {
@@ -126,6 +120,7 @@ extension MessageView : SetUpViews{
             tableView.separatorStyle = .none
             tableView.register(MessagesCell.self, forCellReuseIdentifier: "cell")
             tableView.refreshControl = self.refreshcontroller
+            tableView.backgroundColor = .clear
             return tableView
         }()
         leftButton = {
@@ -146,7 +141,7 @@ extension MessageView : SetUpViews{
     }
     
     func setupFrameWithPhone(withdeviceName: PhoneType) {
-            labelforNavBar.frame = CGRect(x: (screenWith  / 2 ) - 76, y: 40, width: 200, height: 40)
+            labelforNavBar.frame = CGRect(x: (screenWith  / 2 ) - 100, y: 40, width: 200, height: 40)
             tableView.frame = CGRect(x: 0, y: 90, width: screenWith, height: screenHeigth - 90)
             leftButton.frame = CGRect(x: 10, y: 40, width: 50, height: 40)
             rightButton.frame = CGRect(x: screenWith - 60, y: 40, width: 50, height: 40)
@@ -173,5 +168,7 @@ extension MessageView :UIImagePickerControllerDelegate,UINavigationControllerDel
         print(selected)
         GeneralClasses.referance.sentImages(with: selected)
         self.dismiss(animated: true, completion: nil)
+        SVProgressHUD.dismiss()
+        self.present(CreateAlert.referance.createAlert(withTitle: "Information", andMessage: "Sent", andActionTitle: "Okay"),animated: true,completion: nil)
     }
 }

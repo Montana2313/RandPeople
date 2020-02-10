@@ -13,8 +13,10 @@ class ChatView: Navbar {
     private var leftBackButton = UIButton()
     private var chatTableView = UITableView()
     private var personTalkArray = [String]()
+    private var personTalkDate = [Timestamp]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor(red:0.95, green:0.99, blue:0.99, alpha:1.0)
         getPerson()
         setupViews()
         setupFrameWithPhone(withdeviceName: .Hata)
@@ -26,10 +28,14 @@ class ChatView: Navbar {
                 for document in document!.documents {
                     print(document.documentID)
                     print(document.data())
+                    let data = document.data()
                     print("veriler var")
-//                    let data = document.data()
-                    self.personTalkArray.append(document.documentID)
-                    self.chatTableView.reloadData()
+                    let status = self.compareDate(withDate: data["dateOfAccept"] as! Timestamp)
+                    if status == false {
+                        self.personTalkArray.append(document.documentID)
+                        self.personTalkDate.append(data["dateOfAccept"] as! Timestamp)
+                        self.chatTableView.reloadData()
+                    }
                 }
             }else {print(error!.localizedDescription)}
         }
@@ -50,6 +56,7 @@ extension ChatView:SetUpViews{
             tableView.dataSource = self
             tableView.separatorStyle = .none
             tableView.register(FirstCell.self, forCellReuseIdentifier: "cell")
+            tableView.backgroundColor = .clear
             return tableView
         }()
     }
@@ -62,23 +69,44 @@ extension ChatView:SetUpViews{
         self.view.addSubview(chatTableView)
     }
     @objc func backButton(){
+        // reklam gelecek
         self.navigationController?.popViewController(animated: true)
     }
     
 }
 extension ChatView : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.personTalkArray.count
+        if self.personTalkArray.count > 0 {
+            return self.personTalkArray.count
+        }else{
+            return 1
+        }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? FirstCell else {fatalError("error")}
-        // eğer userID var ise rengi daha farklı olacak
-        cell.CommenterName.text = self.personTalkArray[indexPath.row]
-        return cell
+        if self.personTalkArray.count > 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? FirstCell else {fatalError("error")}
+            cell.backgroundColor = .clear
+            // eğer userID var ise rengi daha farklı olacak
+             let stringArr = self.personTalkArray[indexPath.row].components(separatedBy: "-")
+            cell.CommenterName.text = "User#\(String(describing: stringArr.last!))"
+            cell.CommenterName.sizeToFit()
+            return cell
+        }else {
+            self.chatTableView.register(NoResultCell.self, forCellReuseIdentifier: "cellNo")
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellNo") as? NoResultCell else {fatalError("error")}
+            // daha güzel bir cell tasarla
+            // no result found adı
+            cell.backgroundColor = .clear
+            cell.CommenterName.text = "Konuşma geçmişi bulamadık"
+            cell.CommenterName.textAlignment = .center
+            cell.isUserInteractionEnabled = false
+            return cell
+        }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let personalView = PersonalChatView()
+        personalView.setUserID(withID: self.personTalkArray[indexPath.row])
         self.navigationController?.pushViewController(personalView, animated: true)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

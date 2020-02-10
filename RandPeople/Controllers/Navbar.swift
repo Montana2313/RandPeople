@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class Navbar: UIViewController {
     private var customNavBar = UIView()
@@ -14,6 +15,24 @@ class Navbar: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         MasterPage()
+        if Reachability.isConnectedToNetwork() == false {
+            self.present(CreateAlert.referance.createAlert(withTitle: "Informations", andMessage: "No internet connection", andActionTitle: "Okay")
+            ,animated: true,completion: nil)
+        }
+    }
+     func compareDate(withDate:Timestamp)->Bool{
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let currentDateF = dateFormatter.string(from: currentDate)
+        let comingDateF = dateFormatter.string(from: withDate.dateValue())
+        print("CurrentDate: \(currentDateF)" )
+        print("ComingDate: \(comingDateF)")
+        if currentDateF ==  comingDateF{
+            return false
+        }else {
+            return true
+        }
     }
 }
 extension Navbar : CreateView{

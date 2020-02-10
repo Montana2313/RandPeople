@@ -42,13 +42,16 @@ class PeopleShowView: UIView{
         }()
         anaview = {
             let view = UIView()
-            view.frame = CGRect(x: 20, y:40 , width: screenWith - 40, height: screenHeigth - 80)
+            view.frame = CGRect(x: 20, y:-1*screenHeigth , width: screenWith - 40, height: screenHeigth - 80)
             view.backgroundColor = .white
+            view.layer.cornerRadius = view.frame.size.width / 25.0
+            view.layer.masksToBounds = true
+            view.clipsToBounds = true
             return view
         }()
         confirmButton = {
             let button = UIButton()
-            button.setTitle("Mesaja geç", for: .normal)
+            button.setTitle("Let's talk!", for: .normal)
             button.backgroundColor = UIColor(red:0.40, green:0.83, blue:0.43, alpha:1.0)
             button.addTarget(self, action: #selector(PeopleShowView.directToMessage), for: .touchUpInside)
             return button
@@ -70,10 +73,13 @@ class PeopleShowView: UIView{
            let imageView = UIImageView()
            imageView.frame = CGRect(x: 0, y: 0, width: anaview.frame.size.width, height: anaview.frame.size.height)
             imageView.image = UIImage(named: "austin")
-            imageView.contentMode = .scaleToFill
+            imageView.contentMode = .scaleAspectFill
            return imageView
         }()
-        confirmButton.frame = CGRect(x: 0, y: anaview.frame.size.height - 150, width: anaview.frame.size.width, height: 50)
+        confirmButton.frame = CGRect(x: 0, y: anaview.frame.size.height - 100, width: anaview.frame.size.width, height: 50)
+        confirmButton.layer.cornerRadius = confirmButton.frame.size.width / 25.0
+        confirmButton.layer.masksToBounds = true
+        confirmButton.clipsToBounds = true
 //        changeButton.frame = CGRect(x: 0, y: anaview.frame.size.height - 140, width: anaview.frame.size.width, height: 50)
         self.anaview.addSubview(imageView)
         self.anaview.addSubview(confirmButton)
@@ -84,6 +90,9 @@ class PeopleShowView: UIView{
     func showAlert()
     {
         UIApplication.shared.keyWindow?.addSubview(self.parentView)
+        UIView.animate(withDuration: 1.0) {
+            self.anaview.frame = CGRect(x: 20, y:40, width: screenWith - 40, height: screenHeigth - 80)
+        }
     }
     func setterOfrandPeople(withID:String){
         self.randId = withID
@@ -114,9 +123,9 @@ class PeopleShowView: UIView{
         deleteIfCloseButtonTapped {
             NotificationCenter.default.post(name:NSNotification.Name(rawValue: "postDelete"), object: nil)
             let db = Firestore.firestore()
-            db.collection("MesajInfos").document("Infos").collection(getUserUUID()).document(self.randId).setData(setValue)
-            db.collection("MesajInfos").document("Infos").collection(self.randId).document(getUserUUID()).setData(setValue)
-            
+        db.collection("MesajInfos").document("Infos").collection(getUserUUID()).document(self.randId).setData(setValue)
+        db.collection("MesajInfos").document("Infos").collection(self.randId).document(getUserUUID()).setData(setValue)
+            self.parentView.removeFromSuperview()
             appdel.open_Page(withPage: .PersonalChatView,withParam:self.randId)
         }
     }

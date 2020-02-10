@@ -20,6 +20,10 @@
 		043CE7D0231DC53B00CF84DD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 043CE7CF231DC53B00CF84DD /* GoogleService-Info.plist */; };
 		043CE7D2231DC8CB00CF84DD /* GeneralClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CE7D1231DC8CB00CF84DD /* GeneralClasses.swift */; };
 		0441BFDB231C885B001D26D1 /* PersonalChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441BFDA231C885B001D26D1 /* PersonalChatView.swift */; };
+		04BAB4D6232468DB00E87B64 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BAB4D5232468DB00E87B64 /* Reachability.swift */; };
+		04C11E8E23233405000128DC /* Bck.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C11E8D23233405000128DC /* Bck.png */; };
+		04CEB7432389D05F0058A74A /* FirstUserAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CEB7422389D05F0058A74A /* FirstUserAlert.swift */; };
+		04CFA2FC23EEFF950057B841 /* DynamicLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CFA2FB23EEFF950057B841 /* DynamicLabel.swift */; };
 		04D6FD83231BE93E00FC863C /* CameraButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D6FD81231BE93E00FC863C /* CameraButton.png */; };
 		04D6FD84231BE93E00FC863C /* MessageButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D6FD82231BE93E00FC863C /* MessageButton.png */; };
 		04D6FD86231BF32100FC863C /* backButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D6FD85231BF32100FC863C /* backButton.png */; };
@@ -27,6 +31,7 @@
 		04D6FD8B231C363900FC863C /* PeopleShowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D6FD8A231C363900FC863C /* PeopleShowView.swift */; };
 		04D6FD91231C3CD000FC863C /* austin.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D6FD90231C3CD000FC863C /* austin.png */; };
 		04D6FD93231C3D8D00FC863C /* closeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D6FD92231C3D8D00FC863C /* closeButton.png */; };
+		04F73D5C232267F80048CF99 /* NoResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F73D5B232267F80048CF99 /* NoResultCell.swift */; };
 		3CE72B1CEB5F53E3944F0B67 /* Pods_RandPeople.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D996ED53A8BCD2B91DCB06E4 /* Pods_RandPeople.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +51,10 @@
 		043CE7CF231DC53B00CF84DD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		043CE7D1231DC8CB00CF84DD /* GeneralClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralClasses.swift; sourceTree = "<group>"; };
 		0441BFDA231C885B001D26D1 /* PersonalChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalChatView.swift; sourceTree = "<group>"; };
+		04BAB4D5232468DB00E87B64 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		04C11E8D23233405000128DC /* Bck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bck.png; sourceTree = "<group>"; };
+		04CEB7422389D05F0058A74A /* FirstUserAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstUserAlert.swift; sourceTree = "<group>"; };
+		04CFA2FB23EEFF950057B841 /* DynamicLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicLabel.swift; sourceTree = "<group>"; };
 		04D6FD81231BE93E00FC863C /* CameraButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CameraButton.png; sourceTree = "<group>"; };
 		04D6FD82231BE93E00FC863C /* MessageButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageButton.png; sourceTree = "<group>"; };
 		04D6FD85231BF32100FC863C /* backButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backButton.png; sourceTree = "<group>"; };
@@ -53,6 +62,7 @@
 		04D6FD8A231C363900FC863C /* PeopleShowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleShowView.swift; sourceTree = "<group>"; };
 		04D6FD90231C3CD000FC863C /* austin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = austin.png; sourceTree = "<group>"; };
 		04D6FD92231C3D8D00FC863C /* closeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closeButton.png; sourceTree = "<group>"; };
+		04F73D5B232267F80048CF99 /* NoResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultCell.swift; sourceTree = "<group>"; };
 		1C27F68E4B3BE2CE71C32DE7 /* Pods-RandPeople.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RandPeople.debug.xcconfig"; path = "Target Support Files/Pods-RandPeople/Pods-RandPeople.debug.xcconfig"; sourceTree = "<group>"; };
 		D996ED53A8BCD2B91DCB06E4 /* Pods_RandPeople.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RandPeople.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF60454B55E1446D8317FD9F /* Pods-RandPeople.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RandPeople.release.xcconfig"; path = "Target Support Files/Pods-RandPeople/Pods-RandPeople.release.xcconfig"; sourceTree = "<group>"; };
@@ -108,6 +118,7 @@
 				043CE7D1231DC8CB00CF84DD /* GeneralClasses.swift */,
 				040F8895231B21DC000D4921 /* General.swift */,
 				040F889B231B336A000D4921 /* CreateAlert.swift */,
+				04CFA2FB23EEFF950057B841 /* DynamicLabel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -127,18 +138,38 @@
 		040F8894231B21BB000D4921 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				04CEB7452389D5040058A74A /* Views */,
+				04CEB7442389D4EA0058A74A /* Cell */,
 				04D6FD80231BE92900FC863C /* Images */,
 				040F887F231B2104000D4921 /* AppDelegate.swift */,
-				040F8899231B2B3F000D4921 /* FirstCell.swift */,
-				04D6FD87231C2D1C00FC863C /* MessagesCell.swift */,
-				04D6FD8A231C363900FC863C /* PeopleShowView.swift */,
+				04BAB4D5232468DB00E87B64 /* Reachability.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		04CEB7442389D4EA0058A74A /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				040F8899231B2B3F000D4921 /* FirstCell.swift */,
+				04D6FD87231C2D1C00FC863C /* MessagesCell.swift */,
+				04F73D5B232267F80048CF99 /* NoResultCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		04CEB7452389D5040058A74A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				04D6FD8A231C363900FC863C /* PeopleShowView.swift */,
+				04CEB7422389D05F0058A74A /* FirstUserAlert.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		04D6FD80231BE92900FC863C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				04C11E8D23233405000128DC /* Bck.png */,
 				04D6FD92231C3D8D00FC863C /* closeButton.png */,
 				04D6FD90231C3CD000FC863C /* austin.png */,
 				04D6FD85231BF32100FC863C /* backButton.png */,
@@ -228,6 +259,7 @@
 				04D6FD83231BE93E00FC863C /* CameraButton.png in Resources */,
 				04D6FD93231C3D8D00FC863C /* closeButton.png in Resources */,
 				04D6FD84231BE93E00FC863C /* MessageButton.png in Resources */,
+				04C11E8E23233405000128DC /* Bck.png in Resources */,
 				043CE7D0231DC53B00CF84DD /* GoogleService-Info.plist in Resources */,
 				04D6FD86231BF32100FC863C /* backButton.png in Resources */,
 				04D6FD91231C3CD000FC863C /* austin.png in Resources */,
@@ -285,8 +317,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04BAB4D6232468DB00E87B64 /* Reachability.swift in Sources */,
 				040F8898231B272B000D4921 /* FirstScreen.swift in Sources */,
+				04CFA2FC23EEFF950057B841 /* DynamicLabel.swift in Sources */,
 				04D6FD88231C2D1C00FC863C /* MessagesCell.swift in Sources */,
+				04F73D5C232267F80048CF99 /* NoResultCell.swift in Sources */,
 				04D6FD8B231C363900FC863C /* PeopleShowView.swift in Sources */,
 				040F8896231B21DC000D4921 /* General.swift in Sources */,
 				0441BFDB231C885B001D26D1 /* PersonalChatView.swift in Sources */,
@@ -296,6 +331,7 @@
 				040F8880231B2104000D4921 /* AppDelegate.swift in Sources */,
 				040F889E231B380B000D4921 /* MessageView.swift in Sources */,
 				040F889A231B2B3F000D4921 /* FirstCell.swift in Sources */,
+				04CEB7432389D05F0058A74A /* FirstUserAlert.swift in Sources */,
 				043CE7D2231DC8CB00CF84DD /* GeneralClasses.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

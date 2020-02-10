@@ -35,7 +35,7 @@ class GeneralClasses {
                 let db = Firestore.firestore()
             db.collection("RandPeople").document("Peoples").collection(alici).document(currentuserId).setData(values, completion: { (error) in
                     if error == nil{
-                        SVProgressHUD.dismiss()
+                        
                     }
                 })
             })
@@ -80,7 +80,6 @@ class GeneralClasses {
         db.collection("UserInfos").getDocuments { (snapshot, error) in
             if error == nil {
                 for document in snapshot!.documents {
-                   print(document.documentID)
                    wholeUsers.append(document.documentID)
                 }
                 clousre(wholeUsers)

@@ -1,27 +1,27 @@
 //
-//  FirstCell.swift
+//  NoResultCell.swift
 //  RandPeople
 //
-//  Created by Mac on 1.09.2019.
+//  Created by Mac on 6.09.2019.
 //  Copyright © 2019 Mac. All rights reserved.
 //
 
-
+import Foundation
 import UIKit
 
-class FirstCell: UITableViewCell {
+class NoResultCell: UITableViewCell {
     
     var CommenterName: UILabel = {
         let lbl = UILabel()
-        lbl.textColor = UIColor.white
+        lbl.textColor = UIColor.black
         return lbl
     }()
-
+    
     let anaView : UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red:0.42, green:0.65, blue:0.61, alpha:1.0)
+        view.backgroundColor = UIColor(red:0.93, green:0.93, blue:0.93, alpha:1.0)
         
-        view.frame = CGRect(x: 5, y: 0, width: screenWith - 10, height: 45)
+        view.frame = CGRect(x: 5, y: 0, width: screenWith - 10, height: 50)
         view.layer.cornerRadius = view.frame.width/25.0
         view.clipsToBounds = true
         
@@ -36,7 +36,7 @@ class FirstCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style , reuseIdentifier: reuseIdentifier)
         
-        CommenterName.frame = CGRect(x: 10, y: 0, width: screenWith, height: 30)
+        CommenterName.frame = CGRect(x: 0, y: 10, width: self.anaView.frame.size.width, height: 30)
         anaView.addSubview(CommenterName)
         
         self.addSubview(anaView)
@@ -52,4 +52,3 @@ class FirstCell: UITableViewCell {
         // Configure the view for the selected state
     }
 }
-

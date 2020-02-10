@@ -25,6 +25,9 @@ func getUserUUID()->String {
     }
     return ""
 }
+func getuserLoginFirst()->Bool{
+    return UserDefaults.standard.bool(forKey:"userLogin")
+}
 //Protokoller
 protocol CreateView {
     func MasterPage()
@@ -53,4 +56,8 @@ enum PhoneType {
 class RandPeople {
     var senderID:String = ""
     var imageURL:String = ""
+}
+class MessageType {
+    var senderID:String = ""
+    var messsageText : String = ""
 }
