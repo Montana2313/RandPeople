@@ -22,7 +22,6 @@ class FirstCell: UITableViewCell {
     let anaView : UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red:0.42, green:0.65, blue:0.61, alpha:1.0)
-        
         view.frame = CGRect(x: 5, y: 0, width: screenWith - 5, height: 45)
         view.layer.cornerRadius = view.frame.width/25.0
         view.clipsToBounds = true
@@ -38,7 +37,7 @@ class FirstCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style , reuseIdentifier: reuseIdentifier)
         
-        CommenterName.frame = CGRect(x: 10, y: 0, width: screenWith, height: 45)
+        CommenterName.frame = CGRect(x: 20, y: 0, width: self.anaView.frame.size.width - 40, height: 45)
         anaView.addSubview(CommenterName)
         
         self.addSubview(anaView)

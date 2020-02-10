@@ -18,6 +18,7 @@ class PersonalChatView: Navbar {
     private var bottomView = UIView()
     private var textfield = UITextField()
     private var sentButton = UIButton()
+    var interstitial: GADInterstitial!
     private var messages = [MessageType](){
         didSet{self.tableView.reloadData()}
     }
@@ -30,6 +31,9 @@ class PersonalChatView: Navbar {
         ListenerFunc()
         setupViews()
         setupFrameWithPhone(withdeviceName: .Hata)
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+        let request = GADRequest()
+        interstitial.load(request)
         // Do any additional setup after loading the view.
     }
     @objc func endEditing(){
@@ -107,11 +111,11 @@ extension PersonalChatView : SetUpViews{
            let tableView = UITableView()
             tableView.delegate = self
             tableView.dataSource = self
-            tableView.separatorStyle = . none
-            tableView.register(FirstCell.self, forCellReuseIdentifier: "cell")
+            tableView.separatorStyle = .singleLine
+            tableView.separatorColor = .white
+//            tableView.register(FirstCell.self, forCellReuseIdentifier: "cell")
             tableView.backgroundColor = .clear
-            tableView.estimatedRowHeight = 100
-            tableView.rowHeight = UITableView.automaticDimension
+            tableView.estimatedRowHeight = UITableView.automaticDimension
             return tableView
         }()
         bottomView = {
@@ -157,6 +161,11 @@ extension PersonalChatView : SetUpViews{
           self.view.addSubview(labelOfNav)
     }
     @objc func backButton(){
+        if interstitial.isReady {
+                interstitial.present(fromRootViewController: self)
+        } else {
+                print("Ad wasn't ready")
+        }
         if self.navigationController?.viewControllers == nil{
             guard let appDel = UIApplication.shared.delegate as? AppDelegate else {fatalError("error")}
             appDel.open_Page(withPage: .MessageView, withParam:"")
@@ -180,25 +189,29 @@ extension PersonalChatView : SetUpViews{
 }
 extension PersonalChatView : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.messages.count
+        if self.messages.count > 0 {return self.messages.count}
+        return 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? FirstCell else {fatalError("error")}
-        cell.isUserInteractionEnabled = false
-        cell.backgroundColor = .clear
+        let cell = UITableViewCell()
+        cell.textLabel?.text = self.messages[indexPath.row].messsageText
+        cell.backgroundColor = UIColor(red:0.42, green:0.65, blue:0.61, alpha:1.0)
+        cell.textLabel?.textColor = .white
         if self.messages[indexPath.row].senderID == getUserUUID(){
-            cell.anaView.backgroundColor = .lightGray // deneme
+            cell.backgroundColor = UIColor(red:0.69, green:0.69, blue:0.69, alpha:1.0) // deneme
         }
-        cell.CommenterName.text = self.messages[indexPath.row].messsageText
-        let containerViewHeight: CGFloat = DynamicLabelSize.height(text: cell.CommenterName.text!, font: cell.CommenterName.font!, width: self.view.frame.size.width) + CGFloat(15.0)
-        cell.anaView.height(containerViewHeight)
-        cell.CommenterName.size(CGSize(width: cell.anaView.frame.size.width - 5, height: cell.anaView.frame.size.height - 10))
-        cell.CommenterName.edges(to: cell.anaView)
-        cell.CommenterName.edgesToSuperview( insets: .left(100))
+        cell.textLabel?.textAlignment = .center
+        cell.textLabel?.numberOfLines = 0
+        cell.textLabel?.sizeToFit()
+        cell
+            .isUserInteractionEnabled = false
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     func scrollToBottom(){
         DispatchQueue.main.async {

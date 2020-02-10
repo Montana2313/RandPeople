@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         window = UIWindow(frame: UIScreen.main.bounds)
         var viewcontrollerFirst = UIViewController()
         // Test verisi için
