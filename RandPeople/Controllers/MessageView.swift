@@ -28,6 +28,12 @@ class MessageView: Navbar {
         if getuserLoginFirst() == false {
                 FirstUserAlertView.instance.showAlert()
         }
+        if Reachability.isConnectedToNetwork() == false {
+            UIView.animate(withDuration: 1.0) {
+                self.leftButton.isUserInteractionEnabled = false
+                
+            }
+        }
     }
     @objc func postDelete(){
         if self.senderArray.count > 0 {

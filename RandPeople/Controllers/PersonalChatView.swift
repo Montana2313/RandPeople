@@ -19,6 +19,7 @@ class PersonalChatView: Navbar {
     private var textfield = UITextField()
     private var sentButton = UIButton()
     var interstitial: GADInterstitial!
+    private var adStatus : Bool = false
     private var messages = [MessageType](){
         didSet{self.tableView.reloadData()}
     }
@@ -31,7 +32,7 @@ class PersonalChatView: Navbar {
         ListenerFunc()
         setupViews()
         setupFrameWithPhone(withdeviceName: .Hata)
-        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-1868493465765705/8463937829")
         let request = GADRequest()
         interstitial.load(request)
         // Do any additional setup after loading the view.
@@ -46,6 +47,9 @@ class PersonalChatView: Navbar {
         print("konuşunlan insan : \((withID))")
         selectedUSERID = withID
         self.sentButton.isEnabled = true
+    }
+    func setAdStat(_ value :Bool) {
+        self.adStatus = value
     }
     private func setKeyBoardValue()->Int{
         guard let appDel = UIApplication.shared.delegate as? AppDelegate else {fatalError("error")}
@@ -161,10 +165,12 @@ extension PersonalChatView : SetUpViews{
           self.view.addSubview(labelOfNav)
     }
     @objc func backButton(){
-        if interstitial.isReady {
+        if self.adStatus == true {
+            if interstitial.isReady {
                 interstitial.present(fromRootViewController: self)
-        } else {
+            } else {
                 print("Ad wasn't ready")
+            }
         }
         if self.navigationController?.viewControllers == nil{
             guard let appDel = UIApplication.shared.delegate as? AppDelegate else {fatalError("error")}

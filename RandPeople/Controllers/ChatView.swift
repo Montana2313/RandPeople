@@ -108,6 +108,7 @@ extension ChatView : UITableViewDelegate,UITableViewDataSource{
         tableView.deselectRow(at: indexPath, animated: true)
         let personalView = PersonalChatView()
         personalView.setUserID(withID: self.personTalkArray[indexPath.row])
+        personalView.setAdStat(true)
         self.navigationController?.pushViewController(personalView, animated: true)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
