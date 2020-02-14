@@ -20,11 +20,13 @@ class PeopleShowView: UIView{
     private var imageView = UIImageView()
     private var closeButton = UIButton()
     private var confirmButton = UIButton()
+    private var showProfileButton = UIButton()
     private var changeButton = UIButton()
     private var reportButton = UIButton()
     private var parentView = UIView()
     private var randId : String = ""
     private var imageURLString : String = ""
+    var currentNavigationController = UINavigationController()
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpView()
@@ -66,13 +68,14 @@ class PeopleShowView: UIView{
             button.addTarget(self, action: #selector(PeopleShowView.reportButtonTapped), for: .touchUpInside)
             return button
         }()
-
-//        changeButton = {
-//           let button = UIButton()
-//            button.setTitle("Değiştir", for: .normal)
-//            button.backgroundColor = .red
-//            return button
-//        }()
+        self.showProfileButton = {
+            let button = UIButton()
+            button.setTitle("Show Profile", for: .normal)
+            button.setTitleColor(.white, for: .normal)
+            button.backgroundColor = UIColor(red:0.56, green:0.85, blue:0.82, alpha:1.0)
+            button.addTarget(self, action: #selector(showButtonTapped), for: .touchUpInside)
+            return button
+        }()
         closeButton = {
             let button = UIButton()
             button.frame = CGRect(x: anaview.frame.size.width - 50, y: 10, width: 35, height: 35)
@@ -87,14 +90,24 @@ class PeopleShowView: UIView{
             imageView.contentMode = .scaleAspectFill
            return imageView
         }()
+        self.showProfileButton.frame = CGRect(x: 0, y: anaview.frame.size.height - 165, width: anaview.frame.size.width, height: 50)
         confirmButton.frame = CGRect(x: 0, y: anaview.frame.size.height - 110, width: anaview.frame.size.width, height: 50)
         self.reportButton.frame = CGRect(x: 0, y: anaview.frame.size.height - 55, width: anaview.frame.size.width, height: 50)
         confirmButton.layer.cornerRadius = confirmButton.frame.size.width / 25.0
         confirmButton.layer.masksToBounds = true
         confirmButton.clipsToBounds = true
+        
+        showProfileButton.layer.cornerRadius = showProfileButton.frame.size.width / 25.0
+        showProfileButton.layer.masksToBounds = true
+        showProfileButton.clipsToBounds = true
+        
+        reportButton.layer.cornerRadius = reportButton.frame.size.width / 25.0
+        reportButton.layer.masksToBounds = true
+        reportButton.clipsToBounds = true
 //        changeButton.frame = CGRect(x: 0, y: anaview.frame.size.height - 140, width: anaview.frame.size.width, height: 50)
         self.anaview.addSubview(imageView)
         self.anaview.addSubview(self.reportButton)
+        self.anaview.addSubview(self.showProfileButton)
         self.anaview.addSubview(confirmButton)
 //        self.anaview.addSubview(changeButton)
         self.anaview.addSubview(closeButton)
@@ -150,6 +163,12 @@ class PeopleShowView: UIView{
         db.collection("Reports").document(id).setData(setData)
         self.closeTapped()
         NotificationCenter.default.post(name: NSNotification.Name("report"), object: nil)
+    }
+    @objc func showButtonTapped(){
+        let profile:ProfileVC = ProfileVC()
+        profile.setUserInfos(self.randId)
+        self.parentView.removeFromSuperview()
+        self.currentNavigationController.pushViewController(profile, animated: true)
     }
     
 }

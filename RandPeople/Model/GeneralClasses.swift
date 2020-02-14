@@ -31,7 +31,20 @@ class GeneralClasses {
                 }
             }
         }
-            
+    }
+    func getUserInfos(id:String,userInfos:@escaping(Profil)->Void){
+        let db = Firestore.firestore()
+        let profil = Profil()
+        db.collection("UserInfos").document(id).getDocument { (doc, err) in
+            if err == nil {
+                if let data = doc?.data(){
+                    profil.profileHobbies = data["userhobbies"] as? [String] ?? nil
+                    profil.profilId = doc!.documentID
+                    profil.profilImageURL = data["imageURL"] as? String ?? nil
+                    userInfos(profil)
+                }
+            }
+        }
     }
     func sentImages(with:UIImage){
         SVProgressHUD.show()
@@ -53,7 +66,16 @@ class GeneralClasses {
             
         }
     }
-    private func sentURL(with image:UIImage,closure:@escaping (String)->Void){
+    func updateUserInfos(userId:String , hobbies:[String],imageURL:String,clousure:@escaping()->Void){
+        let db = Firestore.firestore()
+        let values = ["userhobbies":hobbies,"userActive":true,"imageURL":imageURL] as [String : Any]
+        db.collection("UserInfos").document(userId).setData(values) { (error) in
+            if error == nil {
+                clousure()
+            }
+        }
+    }
+     func sentURL(with image:UIImage,closure:@escaping (String)->Void){
         let storage = Storage.storage()
         let storageRef = storage.reference()
         let mediaobject = storageRef.child("media")

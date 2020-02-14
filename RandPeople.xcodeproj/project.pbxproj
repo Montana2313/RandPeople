@@ -25,6 +25,8 @@
 		04717F9F23F57AB30080E474 /* PrivarcyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04717F9E23F57AB30080E474 /* PrivarcyPolicyViewController.swift */; };
 		04BAB4D6232468DB00E87B64 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BAB4D5232468DB00E87B64 /* Reachability.swift */; };
 		04C11E8E23233405000128DC /* Bck.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C11E8D23233405000128DC /* Bck.png */; };
+		04C1ED4A23F676A10046726F /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1ED4923F676A10046726F /* ProfileVC.swift */; };
+		04C1ED4C23F688390046726F /* profilDefault.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C1ED4B23F688390046726F /* profilDefault.png */; };
 		04CEB7432389D05F0058A74A /* FirstUserAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CEB7422389D05F0058A74A /* FirstUserAlert.swift */; };
 		04CFA2FC23EEFF950057B841 /* DynamicLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CFA2FB23EEFF950057B841 /* DynamicLabel.swift */; };
 		04D6FD83231BE93E00FC863C /* CameraButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D6FD81231BE93E00FC863C /* CameraButton.png */; };
@@ -59,6 +61,8 @@
 		04717F9E23F57AB30080E474 /* PrivarcyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivarcyPolicyViewController.swift; sourceTree = "<group>"; };
 		04BAB4D5232468DB00E87B64 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		04C11E8D23233405000128DC /* Bck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bck.png; sourceTree = "<group>"; };
+		04C1ED4923F676A10046726F /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		04C1ED4B23F688390046726F /* profilDefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profilDefault.png; sourceTree = "<group>"; };
 		04CEB7422389D05F0058A74A /* FirstUserAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstUserAlert.swift; sourceTree = "<group>"; };
 		04CFA2FB23EEFF950057B841 /* DynamicLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicLabel.swift; sourceTree = "<group>"; };
 		04D6FD81231BE93E00FC863C /* CameraButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CameraButton.png; sourceTree = "<group>"; };
@@ -140,6 +144,7 @@
 				04717F9C23F576950080E474 /* EUCLAViewController.swift */,
 				04717F9E23F57AB30080E474 /* PrivarcyPolicyViewController.swift */,
 				041913DF23F61FE400C10D73 /* SuspendUserInfoVC.swift */,
+				04C1ED4923F676A10046726F /* ProfileVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -178,6 +183,7 @@
 		04D6FD80231BE92900FC863C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				04C1ED4B23F688390046726F /* profilDefault.png */,
 				04C11E8D23233405000128DC /* Bck.png */,
 				04D6FD92231C3D8D00FC863C /* closeButton.png */,
 				04D6FD90231C3CD000FC863C /* austin.png */,
@@ -268,6 +274,7 @@
 				04D6FD83231BE93E00FC863C /* CameraButton.png in Resources */,
 				04D6FD93231C3D8D00FC863C /* closeButton.png in Resources */,
 				04D6FD84231BE93E00FC863C /* MessageButton.png in Resources */,
+				04C1ED4C23F688390046726F /* profilDefault.png in Resources */,
 				04C11E8E23233405000128DC /* Bck.png in Resources */,
 				043CE7D0231DC53B00CF84DD /* GoogleService-Info.plist in Resources */,
 				04D6FD86231BF32100FC863C /* backButton.png in Resources */,
@@ -326,6 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04C1ED4A23F676A10046726F /* ProfileVC.swift in Sources */,
 				04BAB4D6232468DB00E87B64 /* Reachability.swift in Sources */,
 				040F8898231B272B000D4921 /* FirstScreen.swift in Sources */,
 				04CFA2FC23EEFF950057B841 /* DynamicLabel.swift in Sources */,

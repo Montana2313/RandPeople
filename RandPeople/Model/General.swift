@@ -63,3 +63,8 @@ class MessageType {
     var senderID:String = ""
     var messsageText : String = ""
 }
+class Profil {
+    var profilId:String = "" // username aynı anda
+    var profilImageURL:String? = ""
+    var profileHobbies:[String]? = [String]()
+}

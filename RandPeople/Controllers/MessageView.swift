@@ -12,6 +12,7 @@ import SVProgressHUD
 
 class MessageView: Navbar {
     private var leftButton = UIButton()
+    private var middleButton = UIButton()
     private var rightButton = UIButton()
     private var labelforNavBar = UILabel()
     private var tableView = UITableView()
@@ -42,6 +43,12 @@ class MessageView: Navbar {
     }
     @objc func reportAlert(){
         self.present(CreateAlert.referance.createAlert(withTitle: "Information", andMessage: "Thank you report.We'll check.", andActionTitle: "Okay"),animated: true,completion: nil)
+    }
+    @objc func profileButtonTapped(){
+        let profileVC : ProfileVC = ProfileVC()
+        profileVC.setUserInfos(getUserUUID())
+        
+        self.navigationController?.pushViewController(profileVC, animated: true)
     }
     @objc func postDelete(){
         if self.senderArray.count > 0 {
@@ -104,8 +111,20 @@ extension MessageView : UITableViewDataSource , UITableViewDelegate{
         tableView.deselectRow(at: indexPath, animated: true)
         self.selectedIndex = indexPath.row
         PeopleShowView.instance.setterOfrandPeople(withID: self.senderArray[indexPath.row].senderID)
+        PeopleShowView.instance.currentNavigationController = self.navigationController ?? UINavigationController()
         PeopleShowView.instance.showAlert()
         PeopleShowView.instance.setImage(with: self.senderArray[indexPath.row].imageURL)
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            let db = Firestore.firestore()
+        db.collection("RandPeople").document("Peoples").collection(getUserUUID()).document(self.senderArray[indexPath.row].senderID).delete { (error) in
+                       if error == nil{
+                            self.senderArray.remove(at: indexPath.row)
+                            self.tableView.reloadData()
+                        }
+            }
+        }
     }
     @objc func refreshControlerFunc(){
         print("Refresh Çalıştı")
@@ -195,10 +214,19 @@ extension MessageView : SetUpViews{
             
             return rightButton
         }()
+        middleButton = {
+            let btn = UIButton()
+                btn.setTitle("MyProfile", for: .normal)
+            btn.backgroundColor = .white
+            btn.setTitleColor(UIColor(red:0.56, green:0.85, blue:0.82, alpha:1.0), for: .normal)
+                btn.addTarget(self, action: #selector(profileButtonTapped), for: .touchUpInside)
+                   
+            return btn
+        }()
     }
     
     func setupFrameWithPhone(withdeviceName: PhoneType) {
-            labelforNavBar.frame = CGRect(x: (screenWith  / 2 ) - 100, y: 40, width: 200, height: 40)
+            self.middleButton.frame = CGRect(x: (screenWith  / 2 ) - 100, y: 40, width: 200, height: 40)
             tableView.frame = CGRect(x: 0, y: 90, width: screenWith, height: screenHeigth - 90)
             leftButton.frame = CGRect(x: 10, y: 40, width: 50, height: 40)
             rightButton.frame = CGRect(x: screenWith - 60, y: 40, width: 50, height: 40)
@@ -213,6 +241,10 @@ extension MessageView : SetUpViews{
         self.cameraButton.clipsToBounds = true
         self.cameraButton.layer.cornerRadius = self.cameraButton.frame.size.width / 25.0
         
+        self.middleButton.layer.masksToBounds = true
+        self.middleButton.clipsToBounds = true
+        self.middleButton.layer.cornerRadius = self.cameraButton.frame.size.width / 25.0
+        
         self.libraryButton.layer.masksToBounds = true
         self.libraryButton.clipsToBounds = true
         self.libraryButton.layer.cornerRadius = self.libraryButton.frame.size.width / 25.0
@@ -221,11 +253,11 @@ extension MessageView : SetUpViews{
         self.selectView.clipsToBounds = true
         self.selectView.layer.cornerRadius = selectView.frame.size.width / 25.0
         
-        
+        self.view.addSubview(self.middleButton)
         self.view.addSubview(rightButton)
         self.view.addSubview(leftButton)
         self.view.addSubview(tableView)
-        self.view.addSubview(labelforNavBar)
+//        self.view.addSubview(labelforNavBar)
         self.selectView.addSubview(self.closeViewButton)
         self.selectView.addSubview(self.cameraButton)
         self.selectView.addSubview(self.libraryButton)
