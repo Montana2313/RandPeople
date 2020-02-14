@@ -96,7 +96,7 @@ extension ChatView : UITableViewDelegate,UITableViewDataSource{
             // daha güzel bir cell tasarla
             // no result found adı
             cell.backgroundColor = .clear
-            cell.CommenterName.text = "Konuşma geçmişi bulamadık"
+            cell.CommenterName.text = "We couldn't find conversation history"
             cell.CommenterName.textAlignment = .center
             cell.isUserInteractionEnabled = false
             return cell

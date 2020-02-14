@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if UserDefaults.standard.bool(forKey: "PrivarcyPolicy") == false {
                     viewcontrollerFirst = PrivarcyPolicyViewController()
                 }else {
-                        viewcontrollerFirst = MessageView()
+                    viewcontrollerFirst = MessageView()
                 }
             }
         }
@@ -106,6 +106,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.seguePage(withController: rootView)
         }else if pagetype == .PrivarcyPolicy{
             let rootView : PrivarcyPolicyViewController = PrivarcyPolicyViewController()
+            self.seguePage(withController: rootView)
+        }
+        else if pagetype == .Suspended{
+            let rootView : SuspendUserInfoVC = SuspendUserInfoVC()
             self.seguePage(withController: rootView)
         }
 //        else if pagetype == PageType.ComingEvent{

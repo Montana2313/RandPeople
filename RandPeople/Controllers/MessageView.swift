@@ -49,6 +49,14 @@ class MessageView: Navbar {
             self.tableView.reloadData()
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        GeneralClasses.referance.getUserIsActive { (isActive) in
+            if isActive == false {
+                guard let appDel = UIApplication.shared.delegate as? AppDelegate else {fatalError()}
+                appDel.open_Page(withPage: .Suspended, withParam: nil)
+            }
+        }
+    }
     private func getRandPeople(){
         let db = Firestore.firestore()
         db.collection("RandPeople").document("Peoples").collection(getUserUUID()).getDocuments { (document, error) in

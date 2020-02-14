@@ -24,6 +24,7 @@ class PeopleShowView: UIView{
     private var reportButton = UIButton()
     private var parentView = UIView()
     private var randId : String = ""
+    private var imageURLString : String = ""
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpView()
@@ -110,6 +111,7 @@ class PeopleShowView: UIView{
         self.randId = withID
     }
     func setImage(with:String){
+        self.imageURLString = with
         self.imageView.sd_setImage(with: URL(string: with), completed: nil)
     }
     @objc func closeTapped() {
@@ -144,7 +146,7 @@ class PeopleShowView: UIView{
     @objc func reportButtonTapped(){
         let db = Firestore.firestore()
         let id:String = UUID().uuidString
-        let setData = ["reportedBy":getUserUUID(),"reportTo":self.randId]
+        let setData = ["reportedBy":getUserUUID(),"reportTo":self.randId,"imageURL":self.imageURLString]
         db.collection("Reports").document(id).setData(setData)
         self.closeTapped()
         NotificationCenter.default.post(name: NSNotification.Name("report"), object: nil)

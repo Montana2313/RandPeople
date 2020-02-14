@@ -44,6 +44,7 @@ enum PageType {
     case ChatView
     case PersonalChatView
     case PrivarcyPolicy
+    case Suspended
 }
 enum PhoneType {
     case iPhoneXR

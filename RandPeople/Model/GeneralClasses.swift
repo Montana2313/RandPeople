@@ -15,12 +15,23 @@ class GeneralClasses {
     
     func postFirstScreen(withUserID:String , andHobby:[String] , clousure:@escaping ()->Void){
         let db = Firestore.firestore()
-        let values = ["userhobbies":andHobby]
+        let values = ["userhobbies":andHobby,"userActive":true] as [String : Any]
         db.collection("UserInfos").document(withUserID).setData(values) { (error) in
             if error == nil {
                 clousure()
             }
         }
+    }
+    func getUserIsActive(isActive:@escaping(Bool)->Void){
+        let db = Firestore.firestore()
+        db.collection("UserInfos").document(getUserUUID()).getDocument { (doc, err) in
+            if err == nil {
+                if let data = doc?.data(){
+                    isActive(data["userActive"] as? Bool ?? true)
+                }
+            }
+        }
+            
     }
     func sentImages(with:UIImage){
         SVProgressHUD.show()
