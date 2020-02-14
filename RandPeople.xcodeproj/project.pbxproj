@@ -20,6 +20,8 @@
 		043CE7D0231DC53B00CF84DD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 043CE7CF231DC53B00CF84DD /* GoogleService-Info.plist */; };
 		043CE7D2231DC8CB00CF84DD /* GeneralClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CE7D1231DC8CB00CF84DD /* GeneralClasses.swift */; };
 		0441BFDB231C885B001D26D1 /* PersonalChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441BFDA231C885B001D26D1 /* PersonalChatView.swift */; };
+		04717F9D23F576950080E474 /* EUCLAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04717F9C23F576950080E474 /* EUCLAViewController.swift */; };
+		04717F9F23F57AB30080E474 /* PrivarcyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04717F9E23F57AB30080E474 /* PrivarcyPolicyViewController.swift */; };
 		04BAB4D6232468DB00E87B64 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BAB4D5232468DB00E87B64 /* Reachability.swift */; };
 		04C11E8E23233405000128DC /* Bck.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C11E8D23233405000128DC /* Bck.png */; };
 		04CEB7432389D05F0058A74A /* FirstUserAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CEB7422389D05F0058A74A /* FirstUserAlert.swift */; };
@@ -51,6 +53,8 @@
 		043CE7CF231DC53B00CF84DD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		043CE7D1231DC8CB00CF84DD /* GeneralClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralClasses.swift; sourceTree = "<group>"; };
 		0441BFDA231C885B001D26D1 /* PersonalChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalChatView.swift; sourceTree = "<group>"; };
+		04717F9C23F576950080E474 /* EUCLAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EUCLAViewController.swift; sourceTree = "<group>"; };
+		04717F9E23F57AB30080E474 /* PrivarcyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivarcyPolicyViewController.swift; sourceTree = "<group>"; };
 		04BAB4D5232468DB00E87B64 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		04C11E8D23233405000128DC /* Bck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bck.png; sourceTree = "<group>"; };
 		04CEB7422389D05F0058A74A /* FirstUserAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstUserAlert.swift; sourceTree = "<group>"; };
@@ -131,6 +135,8 @@
 				040F889D231B380B000D4921 /* MessageView.swift */,
 				040F889F231B3833000D4921 /* ChatView.swift */,
 				0441BFDA231C885B001D26D1 /* PersonalChatView.swift */,
+				04717F9C23F576950080E474 /* EUCLAViewController.swift */,
+				04717F9E23F57AB30080E474 /* PrivarcyPolicyViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -327,9 +333,11 @@
 				0441BFDB231C885B001D26D1 /* PersonalChatView.swift in Sources */,
 				040F889C231B336A000D4921 /* CreateAlert.swift in Sources */,
 				040F8882231B2104000D4921 /* Navbar.swift in Sources */,
+				04717F9F23F57AB30080E474 /* PrivarcyPolicyViewController.swift in Sources */,
 				040F88A0231B3833000D4921 /* ChatView.swift in Sources */,
 				040F8880231B2104000D4921 /* AppDelegate.swift in Sources */,
 				040F889E231B380B000D4921 /* MessageView.swift in Sources */,
+				04717F9D23F576950080E474 /* EUCLAViewController.swift in Sources */,
 				040F889A231B2B3F000D4921 /* FirstCell.swift in Sources */,
 				04CEB7432389D05F0058A74A /* FirstUserAlert.swift in Sources */,
 				043CE7D2231DC8CB00CF84DD /* GeneralClasses.swift in Sources */,

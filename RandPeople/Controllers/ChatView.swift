@@ -89,8 +89,6 @@ extension ChatView : UITableViewDelegate,UITableViewDataSource{
             // eğer userID var ise rengi daha farklı olacak
              let stringArr = self.personTalkArray[indexPath.row].components(separatedBy: "-")
             cell.CommenterName.text = "User#\(String(describing: stringArr.last!))"
-            cell.CommenterName.sizeToFit()
-            cell.CommenterName.textAlignment = .center
             return cell
         }else {
             self.chatTableView.register(NoResultCell.self, forCellReuseIdentifier: "cellNo")

@@ -118,7 +118,7 @@ extension FirstScreen : SetUpViews{
         UserDefaults.standard.synchronize()
         GeneralClasses.referance.postFirstScreen(withUserID: newUUID, andHobby: self.selectedList) {
             SVProgressHUD.dismiss()
-             self.navigationController?.pushViewController(MessageView(), animated: true)
+             self.navigationController?.pushViewController(EUCLAViewController(), animated: true)
         }
     }
 }

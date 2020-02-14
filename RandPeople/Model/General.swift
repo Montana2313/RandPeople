@@ -43,6 +43,7 @@ enum PageType {
     case MessageView
     case ChatView
     case PersonalChatView
+    case PrivarcyPolicy
 }
 enum PhoneType {
     case iPhoneXR

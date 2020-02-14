@@ -16,6 +16,10 @@ class MessageView: Navbar {
     private var labelforNavBar = UILabel()
     private var tableView = UITableView()
     private var senderArray = [RandPeople]()
+    private var selectView = UIView()
+    private var closeViewButton  = UIButton()
+    private var cameraButton = UIButton()
+    private var libraryButton  = UIButton()
     private var selectedIndex = 0
     private var refreshcontroller = UIRefreshControl()
     override func viewDidLoad() {
@@ -34,6 +38,10 @@ class MessageView: Navbar {
                 
             }
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(reportAlert), name: NSNotification.Name("report"), object: nil)
+    }
+    @objc func reportAlert(){
+        self.present(CreateAlert.referance.createAlert(withTitle: "Information", andMessage: "Thank you report.We'll check.", andActionTitle: "Okay"),animated: true,completion: nil)
     }
     @objc func postDelete(){
         if self.senderArray.count > 0 {
@@ -129,6 +137,41 @@ extension MessageView : SetUpViews{
             tableView.backgroundColor = .clear
             return tableView
         }()
+        self.selectView = {
+            let view = UIView()
+            view.backgroundColor = UIColor(red:0.56, green:0.85, blue:0.82, alpha:1.0)
+            view.frame = CGRect(x: 5, y: screenHeigth + 100, width: screenWith - 10, height: 300)
+            view.layer.masksToBounds = true
+            view.clipsToBounds = true
+            view.layer.cornerRadius = selectView.frame.size.width / 25.0
+            view.layer.borderWidth = 0.4
+            view.layer.borderColor = UIColor.white.cgColor
+            return view
+        }()
+        self.cameraButton = {
+           let btn = UIButton()
+            btn.setTitle("Camera", for: .normal)
+            btn.backgroundColor = .white
+            btn.setTitleColor(UIColor(red:0.56, green:0.85, blue:0.82, alpha:1.0), for: .normal)
+            btn.addTarget(self, action: #selector(camButtonTapped), for: .touchUpInside)
+            return btn
+        }()
+        self.closeViewButton = {
+            let btn = UIButton()
+            btn.setTitle("X", for: .normal)
+            btn.backgroundColor = .white
+            btn.setTitleColor(UIColor(red:0.56, green:0.85, blue:0.82, alpha:1.0), for: .normal)
+            btn.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+            return btn
+        }()
+        self.libraryButton = {
+           let btn = UIButton()
+            btn.setTitle("Library", for: .normal)
+            btn.backgroundColor = .white
+            btn.setTitleColor(UIColor(red:0.56, green:0.85, blue:0.82, alpha:1.0), for: .normal)
+            btn.addTarget(self, action: #selector(libButtonTapped), for: .touchUpInside)
+            return btn
+        }()
         leftButton = {
            let leftButton = UIButton()
             // image gelecek burayada
@@ -151,18 +194,60 @@ extension MessageView : SetUpViews{
             tableView.frame = CGRect(x: 0, y: 90, width: screenWith, height: screenHeigth - 90)
             leftButton.frame = CGRect(x: 10, y: 40, width: 50, height: 40)
             rightButton.frame = CGRect(x: screenWith - 60, y: 40, width: 50, height: 40)
+        self.cameraButton.frame = CGRect(x: 5, y: 60, width: self.selectView.frame.size.width - 10, height: 50)
+        self.libraryButton.frame = CGRect(x: 5, y: 170, width: self.selectView.frame.size.width - 10, height: 50)
+        self.closeViewButton.frame = CGRect(x: self.selectView.frame.size.width - 40, y: 5, width: 30, height: 30)
+        self.closeViewButton.layer.masksToBounds = true
+        self.closeViewButton.clipsToBounds = true
+        self.closeViewButton.layer.cornerRadius = self.closeViewButton.frame.size.width / 2.0
+        
+        self.cameraButton.layer.masksToBounds = true
+        self.cameraButton.clipsToBounds = true
+        self.cameraButton.layer.cornerRadius = self.cameraButton.frame.size.width / 25.0
+        
+        self.libraryButton.layer.masksToBounds = true
+        self.libraryButton.clipsToBounds = true
+        self.libraryButton.layer.cornerRadius = self.libraryButton.frame.size.width / 25.0
+        
+        self.selectView.layer.masksToBounds = true
+        self.selectView.clipsToBounds = true
+        self.selectView.layer.cornerRadius = selectView.frame.size.width / 25.0
+        
         
         self.view.addSubview(rightButton)
         self.view.addSubview(leftButton)
         self.view.addSubview(tableView)
         self.view.addSubview(labelforNavBar)
+        self.selectView.addSubview(self.closeViewButton)
+        self.selectView.addSubview(self.cameraButton)
+        self.selectView.addSubview(self.libraryButton)
+        self.view.addSubview(selectView)
     }
-    @objc func setPicker(){
+    @objc func camButtonTapped(){
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType  = .camera // normalde camera olacak
+        picker.allowsEditing = false
+        self.present(picker,animated: true,completion: nil)
+        self.closeButtonTapped()
+    }
+    @objc func libButtonTapped(){
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType  = .photoLibrary // normalde camera olacak
         picker.allowsEditing = false
         self.present(picker,animated: true,completion: nil)
+        self.closeButtonTapped()
+    }
+    @objc func closeButtonTapped(){
+         UIView.animate(withDuration: 1.0) {
+                self.selectView.frame = CGRect(x: 5, y: screenHeigth + 100, width: screenWith - 10, height: 300)
+        }
+    }
+    @objc func setPicker(){
+        UIView.animate(withDuration: 1.0) {
+            self.selectView.frame = CGRect(x: 5, y: screenHeigth - 310, width: screenWith - 10, height: 300)
+        }
     }
     @objc func navigateToMessages(){
         self.navigationController?.pushViewController(ChatView(), animated: true)

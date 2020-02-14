@@ -30,7 +30,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }else {
             print("USERID VAR")
             print(getUserUUID())
-             viewcontrollerFirst = MessageView()
+            if UserDefaults.standard.bool(forKey: "EUCLA") == false {
+                viewcontrollerFirst = EUCLAViewController()
+            }else {
+                if UserDefaults.standard.bool(forKey: "PrivarcyPolicy") == false {
+                    viewcontrollerFirst = PrivarcyPolicyViewController()
+                }else {
+                        viewcontrollerFirst = MessageView()
+                }
+            }
         }
        
         let nav1 = UINavigationController()
@@ -95,6 +103,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }else if pagetype == PageType.PersonalChatView {
             let rootView:PersonalChatView = PersonalChatView()
             rootView.setUserID(withID:withParam!)
+            self.seguePage(withController: rootView)
+        }else if pagetype == .PrivarcyPolicy{
+            let rootView : PrivarcyPolicyViewController = PrivarcyPolicyViewController()
             self.seguePage(withController: rootView)
         }
 //        else if pagetype == PageType.ComingEvent{

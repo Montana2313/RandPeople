@@ -16,6 +16,7 @@ class FirstCell: UITableViewCell {
         lbl.textColor = .white
         lbl.backgroundColor = .clear
         lbl.numberOfLines = 0
+        lbl.textAlignment = .center
         return lbl
     }()
 
@@ -37,7 +38,7 @@ class FirstCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style , reuseIdentifier: reuseIdentifier)
         
-        CommenterName.frame = CGRect(x: 20, y: 0, width: self.anaView.frame.size.width - 40, height: 45)
+        CommenterName.frame = CGRect(x: 10, y: (self.anaView.frame.size.height / 2) - 25, width: self.anaView.frame.size.width - 20, height: 50)
         anaView.addSubview(CommenterName)
         
         self.addSubview(anaView)

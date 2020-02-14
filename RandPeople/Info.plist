@@ -25,7 +25,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>The application requests access your library to send photos</string>
+	<string>The application requests access your camera to send photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>The application requests access your library to send photos</string>
 	<key>UILaunchStoryboardName</key>

@@ -185,12 +185,41 @@ extension PersonalChatView : SetUpViews{
 //        tableView.addSubview(bottomView)
     }
     @objc func sentButtonTapped(){
-        let db = Firestore.firestore()
-        let value = ["messsageText":self.textfield.text! , "senderId":getUserUUID(),"sentDate":Date()] as [String : Any]
-        let sentuuid = NSUUID().uuidString
-    db.collection("WholeMessages").document(getUserUUID()).collection(self.selectedUSERID).document(sentuuid).setData(value)
-    db.collection("WholeMessages").document(self.selectedUSERID).collection(getUserUUID()).document(sentuuid).setData(value)
-        self.textfield.text = ""
+        let textFieldTextForAnalysis = self.textfield.text!.lowercased()
+        if  textFieldTextForAnalysis.contains("fuck") == true || textFieldTextForAnalysis.contains("fucker") == true ||
+            textFieldTextForAnalysis.contains("fucked") == true ||
+            textFieldTextForAnalysis.contains("motherfucker") == true ||
+            textFieldTextForAnalysis.contains("slut") == true ||
+            textFieldTextForAnalysis.contains("dick") == true ||
+            textFieldTextForAnalysis.contains("fucking") == true ||
+            textFieldTextForAnalysis.contains("idiot") == true ||
+            textFieldTextForAnalysis.contains("siktir git") == true ||
+            textFieldTextForAnalysis.contains("weirdo") == true ||
+            textFieldTextForAnalysis.contains("amk") == true ||
+            textFieldTextForAnalysis.contains("mk") == true ||
+            textFieldTextForAnalysis.contains("yavşak") == true ||
+            textFieldTextForAnalysis.contains("piç") == true ||
+            textFieldTextForAnalysis.contains("gtfo") == true ||
+            textFieldTextForAnalysis.contains("orospu") == true ||
+            textFieldTextForAnalysis.contains("amına") == true ||
+            textFieldTextForAnalysis.contains("ananın") == true ||
+            textFieldTextForAnalysis.contains("sikerim") == true ||
+            textFieldTextForAnalysis.contains("sikecem") == true ||
+            textFieldTextForAnalysis.contains("siktir") == true ||
+            textFieldTextForAnalysis.contains("siktir git") == true ||
+            textFieldTextForAnalysis.contains("oç") == true ||
+            textFieldTextForAnalysis.contains("sikiyor") == true
+        {
+            self.present(CreateAlert.referance.createAlert(withTitle: "Information", andMessage: "Delete inappropriate words", andActionTitle: "Okay."),animated: true,completion: nil)
+        }
+        else {
+            let db = Firestore.firestore()
+            let value = ["messsageText":self.textfield.text! , "senderId":getUserUUID(),"sentDate":Date()] as [String : Any]
+            let sentuuid = NSUUID().uuidString
+        db.collection("WholeMessages").document(getUserUUID()).collection(self.selectedUSERID).document(sentuuid).setData(value)
+        db.collection("WholeMessages").document(self.selectedUSERID).collection(getUserUUID()).document(sentuuid).setData(value)
+            self.textfield.text = ""
+        }
     }
 }
 extension PersonalChatView : UITableViewDelegate,UITableViewDataSource{

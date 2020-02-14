@@ -21,6 +21,7 @@ class PeopleShowView: UIView{
     private var closeButton = UIButton()
     private var confirmButton = UIButton()
     private var changeButton = UIButton()
+    private var reportButton = UIButton()
     private var parentView = UIView()
     private var randId : String = ""
     override init(frame: CGRect) {
@@ -56,6 +57,15 @@ class PeopleShowView: UIView{
             button.addTarget(self, action: #selector(PeopleShowView.directToMessage), for: .touchUpInside)
             return button
         }()
+        reportButton = {
+            let button = UIButton()
+            button.setTitle("Inappropriate", for: .normal)
+            button.setTitleColor(.white, for: .normal)
+            button.backgroundColor = .red
+            button.addTarget(self, action: #selector(PeopleShowView.reportButtonTapped), for: .touchUpInside)
+            return button
+        }()
+
 //        changeButton = {
 //           let button = UIButton()
 //            button.setTitle("Değiştir", for: .normal)
@@ -76,12 +86,14 @@ class PeopleShowView: UIView{
             imageView.contentMode = .scaleAspectFill
            return imageView
         }()
-        confirmButton.frame = CGRect(x: 0, y: anaview.frame.size.height - 100, width: anaview.frame.size.width, height: 50)
+        confirmButton.frame = CGRect(x: 0, y: anaview.frame.size.height - 110, width: anaview.frame.size.width, height: 50)
+        self.reportButton.frame = CGRect(x: 0, y: anaview.frame.size.height - 55, width: anaview.frame.size.width, height: 50)
         confirmButton.layer.cornerRadius = confirmButton.frame.size.width / 25.0
         confirmButton.layer.masksToBounds = true
         confirmButton.clipsToBounds = true
 //        changeButton.frame = CGRect(x: 0, y: anaview.frame.size.height - 140, width: anaview.frame.size.width, height: 50)
         self.anaview.addSubview(imageView)
+        self.anaview.addSubview(self.reportButton)
         self.anaview.addSubview(confirmButton)
 //        self.anaview.addSubview(changeButton)
         self.anaview.addSubview(closeButton)
@@ -128,6 +140,14 @@ class PeopleShowView: UIView{
             self.parentView.removeFromSuperview()
             appdel.open_Page(withPage: .PersonalChatView,withParam:self.randId)
         }
+    }
+    @objc func reportButtonTapped(){
+        let db = Firestore.firestore()
+        let id:String = UUID().uuidString
+        let setData = ["reportedBy":getUserUUID(),"reportTo":self.randId]
+        db.collection("Reports").document(id).setData(setData)
+        self.closeTapped()
+        NotificationCenter.default.post(name: NSNotification.Name("report"), object: nil)
     }
     
 }
