@@ -27,6 +27,7 @@
 		04C11E8E23233405000128DC /* Bck.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C11E8D23233405000128DC /* Bck.png */; };
 		04C1ED4A23F676A10046726F /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1ED4923F676A10046726F /* ProfileVC.swift */; };
 		04C1ED4C23F688390046726F /* profilDefault.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C1ED4B23F688390046726F /* profilDefault.png */; };
+		04C1ED4E23F6963D0046726F /* SelectPersonsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1ED4D23F6963D0046726F /* SelectPersonsVC.swift */; };
 		04CEB7432389D05F0058A74A /* FirstUserAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CEB7422389D05F0058A74A /* FirstUserAlert.swift */; };
 		04CFA2FC23EEFF950057B841 /* DynamicLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CFA2FB23EEFF950057B841 /* DynamicLabel.swift */; };
 		04D6FD83231BE93E00FC863C /* CameraButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D6FD81231BE93E00FC863C /* CameraButton.png */; };
@@ -63,6 +64,7 @@
 		04C11E8D23233405000128DC /* Bck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bck.png; sourceTree = "<group>"; };
 		04C1ED4923F676A10046726F /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		04C1ED4B23F688390046726F /* profilDefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profilDefault.png; sourceTree = "<group>"; };
+		04C1ED4D23F6963D0046726F /* SelectPersonsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPersonsVC.swift; sourceTree = "<group>"; };
 		04CEB7422389D05F0058A74A /* FirstUserAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstUserAlert.swift; sourceTree = "<group>"; };
 		04CFA2FB23EEFF950057B841 /* DynamicLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicLabel.swift; sourceTree = "<group>"; };
 		04D6FD81231BE93E00FC863C /* CameraButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CameraButton.png; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				04717F9E23F57AB30080E474 /* PrivarcyPolicyViewController.swift */,
 				041913DF23F61FE400C10D73 /* SuspendUserInfoVC.swift */,
 				04C1ED4923F676A10046726F /* ProfileVC.swift */,
+				04C1ED4D23F6963D0046726F /* SelectPersonsVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				040F8896231B21DC000D4921 /* General.swift in Sources */,
 				0441BFDB231C885B001D26D1 /* PersonalChatView.swift in Sources */,
 				040F889C231B336A000D4921 /* CreateAlert.swift in Sources */,
+				04C1ED4E23F6963D0046726F /* SelectPersonsVC.swift in Sources */,
 				041913E023F61FE400C10D73 /* SuspendUserInfoVC.swift in Sources */,
 				040F8882231B2104000D4921 /* Navbar.swift in Sources */,
 				04717F9F23F57AB30080E474 /* PrivarcyPolicyViewController.swift in Sources */,

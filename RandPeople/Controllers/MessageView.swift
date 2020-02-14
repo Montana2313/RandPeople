@@ -297,9 +297,10 @@ extension MessageView :UIImagePickerControllerDelegate,UINavigationControllerDel
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selected = info[.originalImage] as? UIImage else {fatalError("error")}
         print(selected)
-        GeneralClasses.referance.sentImages(with: selected)
         self.dismiss(animated: true, completion: nil)
         SVProgressHUD.dismiss()
-        self.present(CreateAlert.referance.createAlert(withTitle: "Information", andMessage: "Sent", andActionTitle: "Okay"),animated: true,completion: nil)
+        let scVC = SelectPersonsVC()
+        scVC.setSelectedImage(selected)
+        self.navigationController?.pushViewController(scVC, animated: true)
     }
 }

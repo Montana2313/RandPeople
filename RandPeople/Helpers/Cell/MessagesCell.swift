@@ -19,7 +19,7 @@ class MessagesCell: UITableViewCell {
     }()
     var uıimageView : UIImageView = {
         let imageview = UIImageView()
-        imageview.image = UIImage(named: "CameraButton")
+        imageview.image = UIImage(named: "profilDefault")
         return imageview
     }()
     

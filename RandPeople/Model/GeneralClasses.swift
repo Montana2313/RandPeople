@@ -46,25 +46,22 @@ class GeneralClasses {
             }
         }
     }
-    func sentImages(with:UIImage){
+    func sentImages(personId:String,_ image :UIImage,complition:@escaping()->Void){
         SVProgressHUD.show()
         let currentuserId = getUserUUID()
-        getWholeUser { (peopeID) in
-            print("sonlandı")
-            let alici = self.getrandomPeople(withWholePeople: peopeID, currentUserId: currentuserId)
-            print(alici)
-            print("alici belirlendi")
-            self.sentURL(with: with, closure: { (urlOfImage) in
+            self.sentURL(with: image, closure: { (urlOfImage) in
                 let values = ["imageURL":urlOfImage,"sentDate":Date()] as [String : Any]
                 let db = Firestore.firestore()
-            db.collection("RandPeople").document("Peoples").collection(alici).document(currentuserId).setData(values, completion: { (error) in
+            db.collection("RandPeople").document("Peoples").collection(personId).document(currentuserId).setData(values, completion: { (error) in
                     if error == nil{
-                        
+                        complition()
+                    }else {
+                        complition()
                     }
                 })
             })
             
-        }
+        
     }
     func updateUserInfos(userId:String , hobbies:[String],imageURL:String,clousure:@escaping()->Void){
         let db = Firestore.firestore()
@@ -107,7 +104,7 @@ class GeneralClasses {
         
         return currentRandomPeople
     }
-    private func getWholeUser(clousre:@escaping ([String])->Void){
+    private func getAllUsernames(clousre:@escaping ([String])->Void){
         let db = Firestore.firestore()
         var wholeUsers = [String]()
         db.collection("UserInfos").getDocuments { (snapshot, error) in
@@ -119,4 +116,24 @@ class GeneralClasses {
             }
         }
     }
+    func getAllUserInfos(clousre:@escaping([Profil])->Void){
+        let db = Firestore.firestore()
+        var wholeUsers = [Profil]()
+        db.collection("UserInfos").getDocuments { (snapshot, error) in
+            if error == nil {
+                for document in snapshot!.documents {
+                    let profil = Profil()
+                    if getUserUUID() != document.documentID{
+                        if document.data()["userActive"] as? Bool == true{
+                            profil.profilId = document.documentID
+                            profil.profilImageURL = document.data()["imageURL"] as? String ?? ""
+                            wholeUsers.append(profil)
+                        }
+                    }
+                }
+                clousre(wholeUsers)
+            }
+        }
+    }
+    
 }
