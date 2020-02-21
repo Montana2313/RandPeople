@@ -153,22 +153,35 @@ extension ProfileVC :UIImagePickerControllerDelegate,UINavigationControllerDeleg
         guard let selected = info[.originalImage] as? UIImage else {fatalError("error")}
         print(selected)
         SVProgressHUD.show()
-        GeneralClasses.referance.sentURL(with: selected) { (urlString) in
-            self.user.profilImageURL = urlString
-            if let hobbies = self.user.profileHobbies{
-                GeneralClasses.referance.updateUserInfos(userId: self.user.profilId, hobbies: hobbies, imageURL: self.user.profilImageURL!) {
-                        SVProgressHUD.dismiss()
-                        self.userImageView.image = selected
-                        self.dismiss(animated: true, completion: nil)
-                }
-            }else {
-                GeneralClasses.referance.updateUserInfos(userId: self.user.profilId, hobbies: [""], imageURL: self.user.profilImageURL!) {
+        if let cgImage = selected.cgImage{
+            GeneralClasses.referance.contentChecker(cgImage) { (isOkay) in
+                if isOkay == false {
                     SVProgressHUD.dismiss()
-                    self.userImageView.image = selected
-                    self.dismiss(animated: true, completion: nil)
+                    let alert = UIAlertController(title: "Information", message: "Plesea select appropriate image", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                    alert.addAction(action)
+                    self.present(alert,animated: true,completion: nil)
+                }else {
+                    GeneralClasses.referance.sentURL(with: selected) { (urlString) in
+                        self.user.profilImageURL = urlString
+                        if let hobbies = self.user.profileHobbies{
+                            GeneralClasses.referance.updateUserInfos(userId: self.user.profilId, hobbies: hobbies, imageURL: self.user.profilImageURL!) {
+                                    SVProgressHUD.dismiss()
+                                    self.userImageView.image = selected
+                                    self.dismiss(animated: true, completion: nil)
+                            }
+                        }else {
+                            GeneralClasses.referance.updateUserInfos(userId: self.user.profilId, hobbies: [""], imageURL: self.user.profilImageURL!) {
+                                SVProgressHUD.dismiss()
+                                self.userImageView.image = selected
+                                self.dismiss(animated: true, completion: nil)
+                            }
+                        }
+                       
+                    }
                 }
             }
-           
         }
+        
     }
 }

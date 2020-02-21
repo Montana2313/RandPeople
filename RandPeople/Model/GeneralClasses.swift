@@ -9,10 +9,43 @@
 import Foundation
 import Firebase
 import SVProgressHUD
+import CoreML
+import Vision
 
 class GeneralClasses {
     static let referance = GeneralClasses()
     
+    func contentChecker(_ image:CGImage,isOkay:@escaping(Bool)->Void){
+        var sentableBool :Bool = true
+        if let model = try? VNCoreMLModel(for: ObjectableContentModel().self.model){
+            let request = VNCoreMLRequest(model: model) { (modelRequest, err) in
+                if err == nil {
+                    if let results = modelRequest.results as? [VNClassificationObservation]{
+                        guard let firstItem = results.first else {fatalError()}
+                        let conf = (firstItem.confidence) * 100
+                        let rounded = Int(conf * 100) / 100
+                        print("Model Result : \(firstItem.identifier)")
+                        print("Model confidence : \(rounded)")
+                        if firstItem.identifier != "Normal" && rounded > 95{
+                            sentableBool = false
+                        }else {
+                            sentableBool = true
+                        }
+                    }
+                }
+            }
+            let handler = VNImageRequestHandler(cgImage: image)
+            do {
+                try handler.perform([request])
+                isOkay(sentableBool)
+            }catch{
+                print("Hata var kardeş")
+            }
+            
+        }
+        
+        
+    }
     func postFirstScreen(withUserID:String , andHobby:[String] , clousure:@escaping ()->Void){
         let db = Firestore.firestore()
         let values = ["userhobbies":andHobby,"userActive":true] as [String : Any]

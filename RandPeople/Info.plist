@@ -25,9 +25,10 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>The application requests access your camera to send photos</string>
+	<string>The application requests access your camera to send photos.Please do not choose objectionable content(sexually explicit materials ,obscene, defamatory, libelous, slanderous, violent and/or unlawful content or profanity,content that infringes upon the rights of any third party, including copyright, trademark, privacy, publicity or other personal or proprietary right,or that is deceptive or fraudulent,content that promotes the use or sale of illegal or regulated substances, tobacco products, ammunition and/or firearms; and (v) gambling, including without limitation, any online casino, sports books, bingo or poker.).Otherwise it will be your responsibility.If a user complains about you, your account will be blocked.
+    </string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>The application requests access your library to send photos</string>
+	<string>The application requests access your library to send photos.Please do not choose objectionable content(sexually explicit materials ,obscene, defamatory, libelous, slanderous, violent and/or unlawful content or profanity,content that infringes upon the rights of any third party, including copyright, trademark, privacy, publicity or other personal or proprietary right,or that is deceptive or fraudulent,content that promotes the use or sale of illegal or regulated substances, tobacco products, ammunition and/or firearms; and (v) gambling, including without limitation, any online casino, sports books, bingo or poker.).Otherwise it will be your responsibility.If a user complains about you, your account will be blocked.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

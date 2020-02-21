@@ -36,8 +36,7 @@ extension PrivarcyPolicyViewController : CreateView{
             txtView.textAlignment = .left
             txtView.backgroundColor = .clear
             txtView.text = """
-RandPeople App End User License Agreement
-Privacy Policy
+RandPeople App Privacy Policy
 Hasan Ozgur Elmasli built the RandPeople app as a Free app. This SERVICE is provided by Hasan Ozgur Elmasli at no cost and is intended for use as is.
 
 This page is used to inform visitors regarding my policies with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.

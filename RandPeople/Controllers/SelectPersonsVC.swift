@@ -85,12 +85,24 @@ extension SelectPersonsVC : UITableViewDataSource , UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         SVProgressHUD.show()
-        GeneralClasses.referance.sentImages(personId: self.profilesArray[indexPath.row].profilId, self.selectedImage) {
-            SVProgressHUD.dismiss()
-            self.present(CreateAlert.referance.createAlert(withTitle: "Information", andMessage: "Sent", andActionTitle: "Okay"),animated: true,completion:{
-                self.navigationController?.popViewController(animated: true)
-            })
-            
+        if let cgImage = self.selectedImage.cgImage{
+            GeneralClasses.referance.contentChecker(cgImage) { (isOkay) in
+                if isOkay == false {
+                    SVProgressHUD.dismiss()
+                    let alert = UIAlertController(title: "Information", message: "Plesea select appropriate image", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                    alert.addAction(action)
+                    self.present(alert,animated: true,completion: nil)
+                }else {
+                        GeneralClasses.referance.sentImages(personId: self.profilesArray[indexPath.row].profilId, self.selectedImage) {
+                                SVProgressHUD.dismiss()
+                                self.present(CreateAlert.referance.createAlert(withTitle: "Information", andMessage: "Sent", andActionTitle: "Okay"),animated: true,completion:{
+                                    self.navigationController?.popViewController(animated: true)
+                                })
+                    
+                            }
+                }
+            }
         }
     }
     
