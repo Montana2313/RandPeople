@@ -90,18 +90,30 @@ class MessageView: Navbar {
 
 extension MessageView : UITableViewDataSource , UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.senderArray.count
+        if self.senderArray.count > 0 {
+            return self.senderArray.count
+        }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? MessagesCell else {fatalError("error")}
-        let view = UIView()
-        view.backgroundColor = .clear
-        cell.selectedBackgroundView = view
+        if self.senderArray.count > 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? MessagesCell else {fatalError("error")}
+            let view = UIView()
+            view.backgroundColor = .clear
+            cell.selectedBackgroundView = view
+            cell.backgroundColor = .clear
+            let stringArr = self.senderArray[indexPath.row].senderID.components(separatedBy: "-")
+            cell.userId.text = "User#\(String(describing: stringArr.last!))"
+            cell.uıimageView.sd_setImage(with: URL(string: self.senderArray[indexPath.row].imageURL), completed: nil)
+            return cell
+        }
+        let cell = UITableViewCell()
+        cell.textLabel?.text = "We couldn't find rands"
+        cell.textLabel?.textAlignment = .center
+        cell.textLabel?.textColor = .black
         cell.backgroundColor = .clear
-        let stringArr = self.senderArray[indexPath.row].senderID.components(separatedBy: "-")
-        cell.userId.text = "User#\(String(describing: stringArr.last!))"
-        cell.uıimageView.sd_setImage(with: URL(string: self.senderArray[indexPath.row].imageURL), completed: nil)
+        cell.isUserInteractionEnabled = false
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

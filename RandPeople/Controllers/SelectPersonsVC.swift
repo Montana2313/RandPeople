@@ -90,7 +90,9 @@ extension SelectPersonsVC : UITableViewDataSource , UITableViewDelegate{
                 if isOkay == false {
                     SVProgressHUD.dismiss()
                     let alert = UIAlertController(title: "Information", message: "Plesea select appropriate image", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                    let action = UIAlertAction(title: "Okay", style: .default) { (btn) in
+                        self.navigationController?.popViewController(animated: true)
+                    }
                     alert.addAction(action)
                     self.present(alert,animated: true,completion: nil)
                 }else {
