@@ -157,6 +157,7 @@ extension ProfileVC :UIImagePickerControllerDelegate,UINavigationControllerDeleg
             GeneralClasses.referance.contentChecker(cgImage) { (isOkay) in
                 if isOkay == false {
                     SVProgressHUD.dismiss()
+                    self.dismiss(animated: true, completion: nil)
                     let alert = UIAlertController(title: "Information", message: "Plesea select appropriate image", preferredStyle: .alert)
                     let action = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
                     alert.addAction(action)
