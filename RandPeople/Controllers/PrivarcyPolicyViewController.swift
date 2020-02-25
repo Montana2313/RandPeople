@@ -20,10 +20,12 @@ class PrivarcyPolicyViewController: UIViewController {
     @objc func doneButtonTapped(){
         UserDefaults.standard.set(true, forKey: "PrivarcyPolicy")
         UserDefaults.standard.synchronize()
-        guard let appDel = UIApplication.shared.delegate as? AppDelegate else {
-            fatalError()
+        GeneralClasses.referance.updatePrivarcyPolicy(stat: true) {
+            guard let appDel = UIApplication.shared.delegate as? AppDelegate else {
+                fatalError()
+            }
+            appDel.open_Page(withPage: .MessageView, withParam: "")
         }
-        appDel.open_Page(withPage: .MessageView, withParam: "")
     }
 }
 extension PrivarcyPolicyViewController : CreateView{
@@ -47,7 +49,7 @@ The terms used in this Privacy Policy have the same meanings as in our Terms and
 
 Information Collection and Use
 
-For a better experience, while using our Service, I may require you to provide us with certain personally identifiable information, including but not limited to user hobbies , photos , messages. The information that I request will be retained on your device and is not collected by me in any way.
+For a better experience, while using our Service, I may require you to provide us with certain personally identifiable information, including but not limited to user hobbies , photos , email  messages. The information that I request will be retained on your device and is not collected by me in any way.
 
 The app does use third party services that may collect information used to identify you.
 

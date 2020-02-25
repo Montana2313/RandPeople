@@ -20,10 +20,12 @@ class EUCLAViewController: UIViewController {
     @objc func doneButtonTapped(){
         UserDefaults.standard.set(true, forKey: "EUCLA")
         UserDefaults.standard.synchronize()
-        guard let appDel = UIApplication.shared.delegate as? AppDelegate else {
-            fatalError()
+        GeneralClasses.referance.updateEULA(stat: true) {
+            guard let appDel = UIApplication.shared.delegate as? AppDelegate else {
+                fatalError()
+            }
+            appDel.open_Page(withPage: .PrivarcyPolicy, withParam: "")
         }
-        appDel.open_Page(withPage: .PrivarcyPolicy, withParam: "")
     }
 }
 extension EUCLAViewController : CreateView{

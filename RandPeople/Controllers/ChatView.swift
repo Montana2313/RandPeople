@@ -86,9 +86,8 @@ extension ChatView : UITableViewDelegate,UITableViewDataSource{
         if self.personTalkArray.count > 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? FirstCell else {fatalError("error")}
             cell.backgroundColor = .clear
-            // eğer userID var ise rengi daha farklı olacak
-             let stringArr = self.personTalkArray[indexPath.row].components(separatedBy: "-")
-            cell.CommenterName.text = "User#\(String(describing: stringArr.last!))"
+            let stringChar = String(self.personTalkArray[indexPath.row].suffix(10))
+            cell.CommenterName.text = "User#\(stringChar)"
             return cell
         }else {
             self.chatTableView.register(NoResultCell.self, forCellReuseIdentifier: "cellNo")

@@ -26,18 +26,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        UserDefaults.standard.removeObject(forKey: "userHobby")
 //        UserDefaults.standard.synchronize()
         if getUserUUID() == ""{
-              viewcontrollerFirst = FirstScreen()
+              viewcontrollerFirst = LoginScreen()
         }else {
             print("USERID VAR")
             print(getUserUUID())
-            if UserDefaults.standard.bool(forKey: "EUCLA") == false {
-                viewcontrollerFirst = EUCLAViewController()
-            }else {
-                if UserDefaults.standard.bool(forKey: "PrivarcyPolicy") == false {
-                    viewcontrollerFirst = PrivarcyPolicyViewController()
+            if UserDefaults.standard.stringArray(forKey: "userHobby") != nil {
+                if UserDefaults.standard.bool(forKey: "EUCLA") == false {
+                    viewcontrollerFirst = EUCLAViewController()
                 }else {
-                    viewcontrollerFirst = MessageView()
+                    if UserDefaults.standard.bool(forKey: "PrivarcyPolicy") == false {
+                        viewcontrollerFirst = PrivarcyPolicyViewController()
+                    }else {
+                        viewcontrollerFirst = MessageView()
+                    }
                 }
+            }else {
+                viewcontrollerFirst = FirstScreen()
             }
         }
        
@@ -88,7 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return PhoneType.Hata
         }
     }
-    func open_Page(withPage pagetype:PageType,withParam:String?){
+    func  open_Page(withPage pagetype:PageType,withParam:String?){
         // yönlendirme işlemleri bura üzerinden yapılacak
         if pagetype == PageType.FirstScreen{
             let rootView:FirstScreen = FirstScreen()
@@ -110,6 +114,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         else if pagetype == .Suspended{
             let rootView : SuspendUserInfoVC = SuspendUserInfoVC()
+            self.seguePage(withController: rootView)
+        }else if pagetype == .EULA{
+            let rootView : EUCLAViewController = EUCLAViewController()
+            self.seguePage(withController: rootView)
+        }else if pagetype == .LoginScreen{
+            let rootView : LoginScreen = LoginScreen()
             self.seguePage(withController: rootView)
         }
 //        else if pagetype == PageType.ComingEvent{

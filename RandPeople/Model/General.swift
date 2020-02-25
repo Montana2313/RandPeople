@@ -39,11 +39,13 @@ protocol SetUpViews {
 
 // Enum
 enum PageType {
+    case LoginScreen
     case FirstScreen
     case MessageView
     case ChatView
     case PersonalChatView
     case PrivarcyPolicy
+    case EULA
     case Suspended
 }
 enum PhoneType {
@@ -55,6 +57,10 @@ enum PhoneType {
     case iPhoneSE
     case Hata
 }
+enum LoginScreenStat{
+    case login
+    case singUp
+}
 class RandPeople {
     var senderID:String = ""
     var imageURL:String = ""
@@ -65,6 +71,9 @@ class MessageType {
 }
 class Profil {
     var profilId:String = "" // username aynı anda
-    var profilImageURL:String? = ""
+    var profilImageURL:String = ""
     var profileHobbies:[String]? = [String]()
+    var profilisActive: Bool = true
+    var profileisEULA : Bool = false
+    var profileisPrivarcyPolicy : Bool = false
 }

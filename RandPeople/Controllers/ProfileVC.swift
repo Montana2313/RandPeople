@@ -11,14 +11,15 @@ import SDWebImage
 import SVProgressHUD
 
 class ProfileVC: UIViewController {
+    private var logoutButton = UIButton()
     private var leftBackButton = UIButton()
     private var user:Profil = Profil(){
         didSet{
             self.userHobbiesTableView.reloadData()
-            let stringArr = self.user.profilId.components(separatedBy: "-")
-            self.userName.text = "User#\(String(describing: stringArr.last!))"
-            if let url = self.user.profilImageURL{
-                self.userImageView.sd_setImage(with: URL(string: url), completed: nil)
+            let last5 = String(self.user.profilId.suffix(10))
+            self.userName.text = "User#\(last5)"
+            if self.user.profilImageURL != ""{
+                self.userImageView.sd_setImage(with: URL(string: self.user.profilImageURL), completed: nil)
             }
         }
     }
@@ -57,6 +58,18 @@ extension ProfileVC : SetUpViews{
             button.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
             button.frame = CGRect(x: 20, y: 40, width: 50, height: 50)
             button.addTarget(self, action: #selector(backButtoTapped), for: .touchUpInside)
+            return button
+        }()
+        self.logoutButton = {
+            let button = UIButton()
+            button.backgroundColor = .red
+            button.setTitle("Logout", for: .normal)
+            button.setTitleColor(.white, for: .normal)
+            button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+            button.frame = CGRect(x: screenWith + 100, y: 40, width: 100, height: 50)
+            button.layer.masksToBounds = true
+            button.clipsToBounds = true
+            button.layer.cornerRadius = button.frame.size.width / 25.0
             return button
         }()
         self.userImageView = {
@@ -101,6 +114,8 @@ extension ProfileVC : SetUpViews{
             tbView.frame = CGRect(x: 0, y: 0, width: self.userHobbiesView.frame.size.width, height: self.userHobbiesView.frame.size.height)
             return tbView
         }()
+        self.view
+            .addSubview(self.logoutButton)
         self.view.addSubview(self.userImageView)
         self.view.addSubview(self.leftBackButton)
         self.userHobbiesView.addSubview(self.userHobbiesTableView)
@@ -110,12 +125,18 @@ extension ProfileVC : SetUpViews{
         self.view.bringSubviewToFront(self.userImageView)
     }
     @objc func backButtoTapped(){
-        // reklam gelecek
         self.navigationController?.popViewController(animated: true)
+    }
+    @objc func logoutButtonTapped(){
+        User.instance.logout {
+            guard let appDel = UIApplication.shared.delegate as? AppDelegate else {fatalError()}
+            appDel.open_Page(withPage:.LoginScreen, withParam: nil)
+        }
     }
     func setupFrameWithPhone(withdeviceName: PhoneType) {
         UIView.animate(withDuration: 1.0) {
             self.anaView.frame = CGRect(x: 0, y: 150, width: screenWith , height: screenHeigth - 150)
+            self.logoutButton.frame = CGRect(x: screenWith - 110, y: 40, width: 100, height: 50)
         }
     }
     @objc func imagePickerTapped(){
@@ -165,20 +186,11 @@ extension ProfileVC :UIImagePickerControllerDelegate,UINavigationControllerDeleg
                 }else {
                     GeneralClasses.referance.sentURL(with: selected) { (urlString) in
                         self.user.profilImageURL = urlString
-                        if let hobbies = self.user.profileHobbies{
-                            GeneralClasses.referance.updateUserInfos(userId: self.user.profilId, hobbies: hobbies, imageURL: self.user.profilImageURL!) {
-                                    SVProgressHUD.dismiss()
-                                    self.userImageView.image = selected
-                                    self.dismiss(animated: true, completion: nil)
-                            }
-                        }else {
-                            GeneralClasses.referance.updateUserInfos(userId: self.user.profilId, hobbies: [""], imageURL: self.user.profilImageURL!) {
-                                SVProgressHUD.dismiss()
-                                self.userImageView.image = selected
-                                self.dismiss(animated: true, completion: nil)
-                            }
+                        GeneralClasses.referance.updateUserImage(imageURL: self.user.profilImageURL) {
+                            SVProgressHUD.dismiss()
+                            self.userImageView.image = selected
+                            self.dismiss(animated: true, completion: nil)
                         }
-                       
                     }
                 }
             }

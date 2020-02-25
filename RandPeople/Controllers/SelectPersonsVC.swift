@@ -72,10 +72,10 @@ extension SelectPersonsVC : UITableViewDataSource , UITableViewDelegate{
         view.backgroundColor = .clear
         cell.selectedBackgroundView = view
         cell.backgroundColor = .clear
-        let stringArr = self.profilesArray[indexPath.row].profilId.components(separatedBy: "-")
-        cell.userId.text = "User#\(String(describing: stringArr.last!))"
-        if let url =  self.profilesArray[indexPath.row].profilImageURL{
-             cell.uıimageView.sd_setImage(with: URL(string: url), completed: nil)
+        let stringChar = String(self.profilesArray[indexPath.row].profilId.suffix(10))
+        cell.userId.text = "User#\(stringChar)"
+        if self.profilesArray[indexPath.row].profilImageURL != ""{
+             cell.uıimageView.sd_setImage(with: URL(string: self.profilesArray[indexPath.row].profilImageURL), completed: nil)
         }
         return cell
     }

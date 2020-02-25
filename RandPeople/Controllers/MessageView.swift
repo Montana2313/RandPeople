@@ -36,7 +36,6 @@ class MessageView: Navbar {
         if Reachability.isConnectedToNetwork() == false {
             UIView.animate(withDuration: 1.0) {
                 self.leftButton.isUserInteractionEnabled = false
-                
             }
         }
         NotificationCenter.default.addObserver(self, selector: #selector(reportAlert), name: NSNotification.Name("report"), object: nil)
@@ -103,8 +102,8 @@ extension MessageView : UITableViewDataSource , UITableViewDelegate{
             view.backgroundColor = .clear
             cell.selectedBackgroundView = view
             cell.backgroundColor = .clear
-            let stringArr = self.senderArray[indexPath.row].senderID.components(separatedBy: "-")
-            cell.userId.text = "User#\(String(describing: stringArr.last!))"
+            let usernameChars = String(self.senderArray[indexPath.row].senderID.suffix(10))
+            cell.userId.text = "User#\(usernameChars)"
             cell.uıimageView.sd_setImage(with: URL(string: self.senderArray[indexPath.row].imageURL), completed: nil)
             return cell
         }

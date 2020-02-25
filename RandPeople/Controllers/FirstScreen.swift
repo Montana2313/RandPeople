@@ -111,12 +111,9 @@ extension FirstScreen : SetUpViews{
         }
         // bir kere açıldıktan sonra bir daha bu ekrena gelmeyecek
         SVProgressHUD.show()
-        let newUUID = NSUUID().uuidString
-        UserDefaults.standard.set(newUUID, forKey: "userID")
-        UserDefaults.standard.synchronize()
         UserDefaults.standard.set(self.selectedList, forKey: "userHobby")
         UserDefaults.standard.synchronize()
-        GeneralClasses.referance.postFirstScreen(withUserID: newUUID, andHobby: self.selectedList) {
+        GeneralClasses.referance.postFirstScreen(withUserID: getUserUUID(), andHobby: self.selectedList) {
             SVProgressHUD.dismiss()
              self.navigationController?.pushViewController(EUCLAViewController(), animated: true)
         }

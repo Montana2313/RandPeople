@@ -48,7 +48,7 @@ class GeneralClasses {
     }
     func postFirstScreen(withUserID:String , andHobby:[String] , clousure:@escaping ()->Void){
         let db = Firestore.firestore()
-        let values = ["userhobbies":andHobby,"userActive":true] as [String : Any]
+        let values = ["userhobbies":andHobby,"userActive":true,"isEULA":false,"isPP":false,"imageURL":""] as [String : Any]
         db.collection("UserInfos").document(withUserID).setData(values) { (error) in
             if error == nil {
                 clousure()
@@ -73,7 +73,10 @@ class GeneralClasses {
                 if let data = doc?.data(){
                     profil.profileHobbies = data["userhobbies"] as? [String] ?? nil
                     profil.profilId = doc!.documentID
-                    profil.profilImageURL = data["imageURL"] as? String ?? nil
+                    profil.profilImageURL = data["imageURL"] as? String ?? ""
+                    profil.profileisEULA = data["isEULA"] as? Bool ?? false
+                    profil.profileisPrivarcyPolicy = data["isPP"] as? Bool ?? false
+                    profil.profilisActive = data["userActive"] as? Bool ?? false
                     userInfos(profil)
                 }
             }
@@ -93,18 +96,40 @@ class GeneralClasses {
                     }
                 })
             })
-            
-        
     }
-    func updateUserInfos(userId:String , hobbies:[String],imageURL:String,clousure:@escaping()->Void){
+    func updateUserImage(imageURL:String,complition:@escaping()->Void){
         let db = Firestore.firestore()
-        let values = ["userhobbies":hobbies,"userActive":true,"imageURL":imageURL] as [String : Any]
-        db.collection("UserInfos").document(userId).setData(values) { (error) in
-            if error == nil {
-                clousure()
+        db.collection("UserInfos").document(getUserUUID()).updateData(["imageURL" : imageURL]) { (err) in
+            if err == nil{
+                complition()
             }
         }
     }
+    func updateEULA(stat:Bool,complition:@escaping()->Void) {
+         let db = Firestore.firestore()
+        db.collection("UserInfos").document(getUserUUID()).updateData(["isEULA" : stat]) { (err) in
+            if err == nil{
+                complition()
+            }
+        }
+    }
+    func updatePrivarcyPolicy(stat:Bool,complition:@escaping()->Void) {
+        let db = Firestore.firestore()
+        db.collection("UserInfos").document(getUserUUID()).updateData(["isPP" : stat]) { (err) in
+            if err == nil{
+                complition()
+            }
+        }
+    }
+//    func updateUserInfos(userId:String,hobbies:[String],imageURL:String,clousure:@escaping()->Void){
+//        let db = Firestore.firestore()
+//        let values = ["userhobbies":hobbies,"userActive":true,"imageURL":imageURL] as [String : Any]
+//        db.collection("UserInfos").document(userId).setData(values) { (error) in
+//            if error == nil {
+//                clousure()
+//            }
+//        }
+//    }
      func sentURL(with image:UIImage,closure:@escaping (String)->Void){
         let storage = Storage.storage()
         let storageRef = storage.reference()

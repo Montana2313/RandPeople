@@ -107,8 +107,8 @@ extension PersonalChatView : SetUpViews{
         labelOfNav = {
             let label = UILabel()
             label.textColor = .black
-             let stringArr = self.selectedUSERID.components(separatedBy: "-")
-            label.text = "User#\(String(describing: stringArr.last!))"
+            let stringChar = String(self.selectedUSERID.suffix(10))
+            label.text = "User#\(stringChar)"
             return label
         }()
         tableView = {
