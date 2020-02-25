@@ -19,6 +19,7 @@ class LoginScreen: UIViewController {
     private var loginView : UIView = UIView()
     private var loginUserEmailTextField = UITextField()
     private var loginPasswordTextfield = UITextField()
+    private var loginForgerPasswordLabel :  UILabel = UILabel()
     // kayit
     private var singUpView : UIView = UIView()
     private var singUpUserEmailTextField = UITextField()
@@ -40,8 +41,8 @@ class LoginScreen: UIViewController {
         if self.status == .login{
             // view yukarı taşınacak
             UIView.animate(withDuration: 1.0) {
-                self.singUpView.frame = CGRect(x: 20, y: (screenHeigth / 2) - 200, width: screenWith - 40, height: 400)
-                self.loginView.frame = CGRect(x: 20, y: screenHeigth + 100, width: screenWith - 40, height: 400)
+                self.singUpView.frame = CGRect(x: 20, y: (screenHeigth / 2) - 150, width: screenWith - 40, height: 300)
+                self.loginView.frame = CGRect(x: 20, y: screenHeigth + 100, width: screenWith - 40, height: 300)
                 self.changeButtons()
             }
             
@@ -67,7 +68,7 @@ class LoginScreen: UIViewController {
                             }
                         }else {
                             print("Geçerli bir email adresini giriniz")
-                           self.present(CreateAlert.referance.createAlert(withTitle: "Informations", andMessage: "Please check email adress", andActionTitle: "Okay")
+                           self.present(CreateAlert.referance.createAlert(withTitle: "Informations", andMessage: "Please enter a valid email address", andActionTitle: "Okay")
                            ,animated: true,completion: nil)
                                     SVProgressHUD.dismiss()
                         }
@@ -95,8 +96,8 @@ class LoginScreen: UIViewController {
     @objc func loginButtonTapped(){
         if self.status == .singUp{
             UIView.animate(withDuration: 1.0) {
-                self.loginView.frame = CGRect(x: 20, y: (screenHeigth / 2) - 200, width: screenWith - 40, height: 400)
-                self.singUpView.frame = CGRect(x: 20, y: screenHeigth + 100, width: screenWith - 40, height: 400)
+                self.loginView.frame = CGRect(x: 20, y: (screenHeigth / 2) - 150, width: screenWith - 40, height: 300)
+                self.singUpView.frame = CGRect(x: 20, y: screenHeigth + 100, width: screenWith - 40, height: 300)
                 self.changeButtons()
             }
             self.status = .login
@@ -175,6 +176,34 @@ class LoginScreen: UIViewController {
             self.loginButton.backgroundColor = .white
         }
     }
+    @objc func forgetLabelTapped(){
+            let alert = UIAlertController(title: "Password reset", message: "Email address", preferredStyle: .alert)
+            alert.addTextField { (textField) in
+                textField.placeholder = "Email address"
+            }
+            let action = UIAlertAction(title: "Send password reset request", style: .default) { (UIAlertAction) in
+                let textField = alert.textFields![0]
+                if textField.text != ""{
+                    if (textField.text?.contains("@"))!{
+                        User.instance.resetPassword(withResetText:textField.text!) { (Result) in
+                            if Result == false{
+                                self.present(CreateAlert.referance.createAlert(withTitle: "Information", andMessage: "Please enter a valid email address", andActionTitle: "Okay"),animated: true,completion:{
+                                    self.navigationController?.popViewController(animated: true)
+                                })
+                            }else {
+                                self.present(CreateAlert.referance.createAlert(withTitle: "Information", andMessage: "Please check your mailbox", andActionTitle: "Okay"),animated: true,completion:{
+                                    self.navigationController?.popViewController(animated: true)
+                                })
+                            }
+                        }
+                    }
+                }
+            }
+            let removeAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alert.addAction(action)
+            alert.addAction(removeAction)
+            self.present(alert,animated: true,completion: nil)
+    }
 }
 extension LoginScreen : SetUpViews{
     func setupViews() {
@@ -190,6 +219,17 @@ extension LoginScreen : SetUpViews{
         self.myLogo = {
             let imageView = UIImageView(image: UIImage(named: "logoclear.png"))
             return imageView
+        }()
+        self.loginForgerPasswordLabel = {
+            let label  = UILabel()
+            label.numberOfLines = 2
+            label.textColor = .white
+            label.text = "Forget Passowrd?"
+            label.textAlignment = .center
+            label.font = UIFont(name: "Helvetica", size: 15.0)
+            label.isUserInteractionEnabled = true
+            label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(forgetLabelTapped)))
+            return label
         }()
         self.loginButton = {
            let btn = UIButton()
@@ -266,7 +306,7 @@ extension LoginScreen : SetUpViews{
         }()
         self.singUpPasswordTextfieldControl = {
             let txtField = UITextField()
-            txtField.attributedPlaceholder = NSAttributedString(string: "Password Again", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
+            txtField.attributedPlaceholder = NSAttributedString(string: "Password again", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
             txtField.backgroundColor = .clear
             txtField.layer.borderWidth = 3.0
             txtField.layer.borderColor = UIColor.white.cgColor
@@ -280,6 +320,8 @@ extension LoginScreen : SetUpViews{
         self.view.addSubview(self.loginButton)
         self.loginView.addSubview(self.loginUserEmailTextField)
         self.loginView.addSubview(self.loginPasswordTextfield)
+        self.loginView.addSubview(self.loginForgerPasswordLabel)
+        
         self.singUpView.addSubview(self.singUpUserEmailTextField)
         self.singUpView.addSubview(self.singUpPasswordTextField)
         self.singUpView.addSubview(self.singUpPasswordTextfieldControl)
@@ -288,16 +330,17 @@ extension LoginScreen : SetUpViews{
         self.view.addSubview(self.singUpView)
     }
     func setupFrameWithPhone(withdeviceName: PhoneType) {
-        self.AppName.frame = CGRect(x: 10, y: (screenHeigth / 2) - 320, width: screenWith - 20, height: 60)
-        self.myLogo.frame = CGRect(x: screenWith - 50, y: screenHeigth - 50, width: 50, height: 40)
+        self.AppName.frame = CGRect(x: 10, y: (screenHeigth / 2) - 220, width: screenWith - 20, height: 60)
+        self.myLogo.frame = CGRect(x: screenWith - 55, y: screenHeigth - 50, width: 60, height: 55)
         self.singUpButton.frame = CGRect(x: 40, y: screenHeigth + 150, width: screenWith - 80, height: 50)
         self.loginButton.frame = CGRect(x: 40, y: screenHeigth + 90, width: screenWith - 80, height: 50)
         
-        self.loginView.frame = CGRect(x: 20, y: screenHeigth + 100, width: screenWith - 40, height: 400)
+        self.loginView.frame = CGRect(x: 20, y: screenHeigth + 100, width: screenWith - 40, height: 300)
         self.loginUserEmailTextField.frame = CGRect(x: 10, y: (self.loginView.frame.size.height / 2) - 75, width: self.loginView.frame.size.width - 20, height: 50)
         self.loginPasswordTextfield.frame = CGRect(x: 10, y: (self.loginView.frame.size.height / 2) - 20, width: self.loginView.frame.size.width - 20, height: 50)
+        self.loginForgerPasswordLabel.frame = CGRect(x: 10, y: (self.loginView.frame.size.height / 2) + 50, width: self.loginView.frame.size.width - 20, height: 30)
         //
-        self.singUpView.frame = CGRect(x: 20, y: screenHeigth + 100, width: screenWith - 20, height: 400)
+        self.singUpView.frame = CGRect(x: 20, y: screenHeigth + 100, width: screenWith - 20, height: 300)
         
         self.singUpUserEmailTextField.frame = CGRect(x: 10, y: (self.singUpView.frame.size.height / 2) - 100, width: self.loginView.frame.size.width - 20, height: 50)
         self.singUpPasswordTextField.frame = CGRect(x: 10, y: (self.singUpView.frame.size.height / 2) - 40, width: self.loginView.frame.size.width - 20, height: 50)
@@ -322,9 +365,9 @@ extension LoginScreen : SetUpViews{
     }
     func animateSetup(withdeviceName:PhoneType){
         UIView.animate(withDuration: 1.0) {
-            self.singUpButton.frame = CGRect(x: 40, y: screenHeigth - 200, width: screenWith - 80, height: 50)
-            self.loginButton.frame = CGRect(x: 40, y: screenHeigth - 140, width: screenWith - 80, height: 50)
-            self.loginView.frame = CGRect(x: 20, y: (screenHeigth / 2) - 200, width: screenWith - 40, height: 400)
+            self.singUpButton.frame = CGRect(x: 40, y: screenHeigth - 180, width: screenWith - 80, height: 50)
+            self.loginButton.frame = CGRect(x: 40, y: screenHeigth - 120, width: screenWith - 80, height: 50)
+            self.loginView.frame = CGRect(x: 20, y: (screenHeigth / 2) - 150, width: screenWith - 40, height: 300)
         }
     }
     
