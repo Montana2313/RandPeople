@@ -137,16 +137,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func seguePage(withController : UIViewController){
         if let window = self.window{
             UIView.transition(with: window, duration: 0.70, options: .transitionFlipFromTop, animations: {
-                if withController.isKind(of: MessageView.classForCoder()){
-                    self.window = UIWindow(frame: UIScreen.main.bounds)
-                    let nav1 = UINavigationController()
-                    nav1.viewControllers = [withController]
-                    nav1.navigationBar.isHidden = true
-                     self.window!.rootViewController = nav1
-                     self.window?.makeKeyAndVisible()
-                }else {
-                   window.rootViewController = withController
-                }
+                self.window = UIWindow(frame: UIScreen.main.bounds)
+                let nav1 = UINavigationController()
+                nav1.viewControllers = [withController]
+                nav1.navigationBar.isHidden = true
+                self.window!.rootViewController = nav1
+                self.window?.makeKeyAndVisible()
             }, completion: nil)
         }
     }

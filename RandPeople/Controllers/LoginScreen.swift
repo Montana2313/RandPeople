@@ -120,6 +120,8 @@ class LoginScreen: UIViewController {
                                         if profil.profileisPrivarcyPolicy == true{
                                             UserDefaults.standard.set(true, forKey: "PrivarcyPolicy")
                                             UserDefaults.standard.synchronize()
+                                            UserDefaults.standard.set(true, forKey: "userLogin")
+                                            UserDefaults.standard.synchronize()
                                             guard let appDel = UIApplication.shared.delegate as? AppDelegate else {fatalError()}
                                             appDel.open_Page(withPage:.MessageView, withParam: nil)
                                         }else {
